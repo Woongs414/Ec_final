@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.review">	
+	<resultMap id="reAnsResult" type="reAnsVO">
+		<result column="re_ans_num" property="re_ans_num" />
+		<result column="review_num" property="review_num" />
+		<result column="seller_id" property="seller_id" />
+		<result column="user_id" property="user_id" />
+		<result column="content" property="content" />
+		<result column="rating" property="rating" />
+		<result column="liked" property="liked" />
+		<result column="user_nick" property="user_nick" />
+		<result column="re_ans_content" property="re_ans_content" />
+		<result column="reg_date" property="reg_date" />
+		<result column="mod_date" property="mod_date" />
+		<result column="ans_reg_date" property="ans_reg_date" />
+		<result column="ans_mod_date" property="mod_date" />
+		<result column="rating_percent" property="rating_percent" />
+	</resultMap>
+	
+	<select id="selectAllReAnsList" resultMap="reAnsResult" parameterType="java.util.Map">
+		<![CDATA[ 
+		SELECT r.review_num,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.rating,r.reg_date, r.mod_date, 
+		a.re_ans_content ,a.reg_date AS ans_reg_date , a.mod_date AS ans_mod_date, a.re_ans_num,
+		(r.rating / 5.0) * 100 as rating_percent
+		FROM review_tbl AS r LEFT OUTER JOIN review_ans_tbl AS a
+		ON r.review_num = a.review_num WHERE r.seller_id = #{seller_id} ORDER BY r.reg_date desc limit #{page},4 	
+		 ]]>
+	</select>
+	
+	<select id="selectTodayReAnsList" resultMap="reAnsResult" parameterType="java.util.Map">
+		<![CDATA[ 
+		SELECT r.review_num,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.rating,r.reg_date, r.mod_date, 
+		a.re_ans_content ,a.reg_date AS ans_reg_date , a.mod_date AS ans_mod_date, a.re_ans_num,
+		(r.rating / 5.0) * 100 as rating_percent
+		FROM review_tbl AS r LEFT OUTER JOIN review_ans_tbl AS a
+		ON r.review_num = a.review_num WHERE r.seller_id = #{seller_id} and r.reg_date = curdate() 
+		ORDER BY r.reg_date desc limit #{page},4	
+		 ]]>
+	</select>
+	
+	<select id="selectYesterReAnsList" resultMap="reAnsResult" parameterType="java.util.Map">
+		<![CDATA[ 
+		SELECT r.review_num,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.rating,r.reg_date, r.mod_date, 
+		a.re_ans_content ,a.reg_date AS ans_reg_date , a.mod_date AS ans_mod_date, a.re_ans_num,
+		(r.rating / 5.0) * 100 as rating_percent
+		FROM review_tbl AS r LEFT OUTER JOIN review_ans_tbl AS a
+		ON r.review_num = a.review_num WHERE r.seller_id = #{seller_id} and r.reg_date = curdate() - interval 1 day 
+		ORDER BY r.reg_date desc limit #{page},4	
+		 ]]>
+	</select>
+	
+	<select id="selectReAnsListCount" resultType="int" parameterType="java.util.Map">
+		<![CDATA[ 
+			select COUNT(*) AS cnt from review_tbl WHERE seller_id = #{seller_id}
+		]]>
+	</select>
+	
+	<select id="selectTodayReAnsListCount" resultType="int" parameterType="java.util.Map">
+		<![CDATA[ 
+			select COUNT(*) AS cnt from review_tbl WHERE seller_id = #{seller_id} and reg_date = curdate()
+		]]>
+	</select>
+	
+	<select id="selectYesterReAnsListCount" resultType="int" parameterType="java.util.Map">
+		<![CDATA[ 
+			select COUNT(*) AS cnt from review_tbl WHERE seller_id = #{seller_id} and reg_date = curdate() - interval 1 day
+		]]>
+	</select>
+	
+	<select id="selectNewAnswerNum" resultType="int" >
+		<![CDATA[
+			SELECT IFNULL(max(re_ans_num)+1,1) from review_ans_tbl
+		]]>
+	</select>
+	
+	<insert id="inserNewAnswer" parameterType="java.util.Map">
+		<![CDATA[
+			insert into review_ans_tbl(re_ans_num,review_num,seller_id,re_ans_content,reg_date,mod_date) 
+			values(#{re_ans_num}, #{review_num}, #{seller_id}, #{re_ans_content}, now(), now())
+		]]>
+	</insert>
+	
+	<delete id="deleteAnswer" parameterType="java.util.Map">
+		<![CDATA[
+			delete from review_ans_tbl where review_num = #{review_num} and seller_id = #{seller_id}
+		]]>
+	</delete>
+	
+	<select id="selectTodayReview" resultType="int" parameterType="String" >
+		<![CDATA[
+			select COUNT(*) AS cnt from review_tbl WHERE seller_id = #{seller_id} and reg_date = curdate()
+		]]>
+	</select>
+</mapper>

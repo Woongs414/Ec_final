@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.mypage">
+	<resultMap id="wishResult" type="wishVO">
+		<result column="wish_num" property="wish_num" />
+		<result column="category_code" property="category_code" />
+		<result column="user_id" property="user_id" />
+		<result column="seller_id" property="seller_id" />
+		<result column="wish_sum" property="wish_sum" />
+	</resultMap>
+	
+	<resultMap id="revResult" type="reviewVO">
+		<result column="review_num" property="review_num" />
+		<result column="user_id" property="user_id" />
+		<result column="pro_num" property="pro_num" />
+		<result column="seller_id" property="seller_id" />
+		<result column="image_fileName" property="image_fileName" />
+		<result column="content" property="content" />
+		<result column="rating" property="rating" />
+		<result column="rating_avg" property="rating_avg" />
+		<result column="review_count" property="review_count" />
+		<result column="liked" property="liked" />
+		<result column="reg_date" property="reg_date" />
+		<result column="mod_date" property="mod_date" />
+	</resultMap>
+	
+	<resultMap type="boardVO" id="boardsResult">
+		<result property="list_num" column="list_num" />
+		<result property="parent_num" column="parent_num" />
+		<result property="category_code" column="category_code" />
+		<result property="user_id" column="user_id" />
+		<result property="u_title" column="u_title" />
+		<result property="u_content" column="u_content" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="hits" column="hits" />
+		<result property="liked" column="liked" />
+		<result property="bad" column="bad" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+	
+	<resultMap type="reservVO" id="reservResult">
+		<result property="seller_id" column="seller_id" />
+		<result property="store_nic" column="store_nic" />
+		<result property="seller_tel" column="seller_tel" />
+		<result property="seller_name" column="seller_name" />
+		<result property="seller_addr" column="seller_addr" />
+		<result property="seller_bizReg" column="seller_bizReg" />
+		<result property="open_time" column="open_time" />
+		<result property="close_time" column="close_time" />
+		<result property="min_People" column="min_People" />
+		<result property="max_People" column="max_People" />
+		<result property="store_introduce" column="store_introduce" />
+	</resultMap>
+	
+	<resultMap type="askVO" id="askResult">
+		<result property="ask_num" column="ask_num" />
+		<result property="category_code" column="category_code" />
+		<result property="user_id" column="user_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="is_ans" column="is_ans" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+	
+<!-- 		
+	<resultMap type="memberVO" id="infoResult">
+		<result property="user_no" column="user_no" />
+		<result property="user_id" column="user_id" />
+		<result property="user_nick" column="user_nick" />
+		<result property="user_pwd" column="user_pwd" />
+		<result property="pwd_ck" column="pwd_ck" />
+		<result property="tel" column="tel" />
+		<result property="user_name" column="user_name" />
+		<result property="user_email" column="user_email" />
+		<result property="birth_yy" column="birth_yy" />
+		<result property="birth_mm" column="birth_mm" />
+		<result property="birth_dd" column="birth_dd" />
+		<result property="gender" column="gender" />
+	</resultMap> -->
+	
+	
+	<!--로그인 된 회원의 찜목록 select  -->
+	<select id="selectwish" resultMap="wishResult" parameterType="String">
+		<![CDATA[ SELECT * FROM wish_tbl WHERE user_id = #{user_id} ]]>
+	</select>
+	
+		<!--로그인 된 회원의 리뷰목록 select  -->
+	<select id="selectReview" resultMap="revResult" parameterType="String">
+		<![CDATA[ SELECT * FROM review_tbl WHERE user_id = #{user_id} ]]>
+	</select>
+	
+	<!--로그인 된 회원의 먹플리 볼플리 목록 select  -->
+	<select id="selectBoard" resultMap="boardsResult" parameterType="String">
+		<![CDATA[ SELECT * FROM u_board_tbl WHERE user_id = #{user_id} ]]>
+	</select>
+	
+	<!--로그인 된 회원의 예약 목록 select  -->
+	<select id="selectBook" resultMap="reservResult" parameterType="String">
+		<![CDATA[ SELECT * FROM book_tbl WHERE user_id = #{user_id} ]]>
+	</select>
+	
+	<!--로그인 된 회원의 1:1문의 목록 select  -->
+	<select id="selectAsk" resultMap="askResult" parameterType="String">
+		<![CDATA[ SELECT * FROM u_ask_tbl WHERE user_id = #{user_id} ]]>
+	</select>
+	
+	<!-- 마이페이지 -->
+	<!--비밀번호 변경(pwd change)-->
+	<update id="userPwdChange"  parameterType="String">
+		<![CDATA[ UPDATE user_tbl SET user_pwd=#{user_pwd} WHERE user_id = #{user_id}]]>
+	</update>
+	<!--회원정보 수정(information update)-->
+	<update id="userUpdate" parameterType="MemberVO">
+		<![CDATA[ UPDATE user_tbl SET user_nick=#{user_nick}, tel=#{tel}, user_name=#{user_name}, user_email=#{user_email}, birth_yy=#{birth_yy}, birth_mm=#{birth_mm}, birth_dd=#{birth_dd} WHERE user_id=#{user_id}]]>
+	</update>
+	<!-- 회원정보 들어가기 전 정보 보여주기 -->
+	<select id="userSelect" resultType="MemberVO" parameterType="String">
+	<![CDATA[select * from user_tbl WHERE user_id=#{user_id}]]>
+	</select>
+	<!--회원정보 수정 전 비밀번호로 본인 확인 Verify your identity with your password before modifying your member information-->
+	<select id="passChk" resultType="int" parameterType="java.util.HashMap">
+	<![CDATA[ SELECT COUNT(*) FROM user_tbl WHERE user_id = #{user_id} AND user_pwd = #{user_pwd}]]>
+	</select>
+	<!-- 회원탈퇴-->
+   <delete id="userDelete" parameterType="String">
+   <![CDATA[ delete from user_tbl where id=#{id}]]>
+   </delete>
+	
+</mapper>

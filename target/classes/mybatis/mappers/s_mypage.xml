@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member.xml의 네임 스페이스 지정 -->
+<mapper namespace="mapper.seller.mypage">
+	<resultMap type="sellerVO" id="sellResult">
+		<result property="seller_num" column="seller_num" />
+		<result property="category_code" column="category_code" />
+		<result property="seller_id" column="seller_id" />
+		<result property="seller_pw" column="seller_pw" />
+		<result property="seller_tel" column="seller_tel" />
+		<result property="seller_bizReg" column="seller_bizReg" />
+		<result property="seller_name" column="seller_name" />
+		<result property="seller_email" column="seller_email" />
+		<result property="seller_addr" column="seller_addr" />
+		<result property="bizReg_image_name" column="bizReg_image_name" />
+		<result property="area" column="area" />
+		<result property="keyword" column="keyword" />
+		<result property="storeInfo_num" column="storeInfo_num" />
+		<result property="seller_id" column="seller_id" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="store_introduce" column="store_introduce" />
+		<result property="openTime" column="openTime" />
+		<result property="closeDay" column="closeDay" />
+		<result property="store_nic" column="store_nic" />
+		<result property="store_benefit" column="store_benefit" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+	
+	<resultMap type="StoreinfosumVO" id="infosumResult">
+		<result property="storeInfo_num" column="storeInfo_num" />
+		<result property="seller_id" column="seller_id" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="store_introduce" column="store_introduce" />
+		<result property="openTime" column="openTime" />
+		<result property="closeDay" column="closeDay" />
+		<result property="store_nic" column="store_nic" />
+		<result property="store_benefit" column="store_benefit" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+		<result property="open_time" column="open_time" />
+		<result property="close_time" column="close_time" />
+		<result property="min_People" column="min_People" />
+		<result property="max_People" column="max_People" />
+		<result property="reserv_pay" column="reserv_pay" />
+		<result property="wish_sum" column="wish_sum" />
+		<result property="review_sum" column="review_sum" />
+		<result property="book_sum" column="book_sum" />
+	</resultMap>
+
+	
+	<select id="checkuser" resultType="int" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		SELECT count(*) from seller_tbl where seller_id =#{seller_id} and seller_pw = #{seller_pw}
+		 ]]>
+	</select>
+	
+	<select id="selectinfosum" resultMap="infosumResult" parameterType="String">
+		<![CDATA[ 
+		SELECT *, (SELECT COUNT(*) FROM wish_tbl WHERE seller_id = #{seller_id}) AS wish_sum, (SELECT COUNT(*) FROM review_tbl WHERE seller_id = #{seller_id}) AS review_sum, (SELECT COUNT(*) FROM book_tbl WHERE seller_id = #{seller_id}) AS book_sum FROM storeinfo_tbl WHERE seller_id=#{seller_id}
+		 ]]>
+	</select>
+	
+	
+	<select id="sellerinfo" resultMap="sellResult">
+		<![CDATA[ 
+		SELECT * from seller_tbl where seller_id =#{seller_id}
+		 ]]>
+	</select>
+	
+	<select id="sellerdetail" resultMap="infosumResult">
+		<![CDATA[ 
+		SELECT * from storeinfo_tbl where seller_id =#{seller_id}
+		 ]]>
+	</select>
+	
+	
+	<update id="changepwd" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		update seller_tbl set seller_pw = #{seller_pw} where seller_id = #{seller_id}
+		 ]]>
+	</update>
+	
+	<update id="modseller" parameterType="SellerVO">
+		<![CDATA[ 
+		update seller_tbl set seller_tel = #{seller_tel}, seller_name = #{seller_name}, seller_email = #{seller_email}, area = #{area}, keyword=#{keyword}, mod_date=now() where seller_id = #{seller_id}
+		 ]]>
+	</update>
+	
+	<update id="modinfo" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		UPDATE storeinfo_tbl SET image_fileName = #{image_fileName}, store_introduce=#{store_introduce}, openTime=#{openTime}, closeDay=#{closeDay}, store_benefit =#{store_benefit}, mod_date = now(), open_time = #{open_time}, close_time=#{close_time}, min_people =#{min_People}, max_people = #{max_People}, reserv_pay=#{reserv_pay} where seller_id = #{seller_id}
+		 ]]>
+	</update>
+	
+	
+	
+
+
+
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<!-- ※나중에 필수적으로 수정 필요함 -->
+<mapper namespace="mapper.member">	
+<!-- 		레코드의 컬럼 이름에 대해 memberVO와 같은 속성 값을 지정 -->
+	<resultMap  type="memberVO" id="memResult" >
+		<result property="user_no" column="user_no" /> 
+		<result property="user_id" column="user_id" />
+		<result property="user_nick" column="user_nick" />
+		<result property="user_pwd" column="user_pwd" />
+		<result property="pwd_ck" column="pwd_ck" />
+		<result property="tel" column="tel" />
+		<result property="user_name" column="user_name" />
+		<result property="user_email" column="user_email" />
+		<result property="birth_yy" column="birth_yy" />
+		<result property="birth_mm" column="birth_mm" />
+		<result property="birth_dd" column="birth_dd" />
+		<result property="gender" column="gender" />
+		</resultMap>
+	
+	
+	
+	
+	
+ 	<insert id="insertMember" parameterType="memberVO">
+		<![CDATA[
+		insert into user_tbl(user_no,user_id,user_nick, user_pwd,tel,user_name, user_email, birth_yy, birth_mm, birth_dd, gender)
+			values((SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl b), #{user_id}, #{user_nick},#{user_pwd}, #{tel}, #{user_name}, #{user_email}, #{birth_yy},#{birth_mm},#{birth_dd}, #{gender})
+	 		
+		]]>
+	</insert> 
+	
+	<!-- 유저아이디 개수 세기 -->
+	<!-- resultType : 결과(보낼)타입 // parameterType : 받아온 값의 타입 -->
+	<select id="idCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from user_tbl where user_id = #{user_id}
+		]]>
+	</select>
+	<!-- 닉네임 개수 세기 -->
+		<select id="nickCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from user_tbl where user_nick = #{user_nick}
+		]]>
+	</select>
+		<!-- 번호 개수 세기 -->
+	<select id="mobileCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from user_tbl where tel = #{mobile}
+		]]>
+	</select>
+	   <!-- 이메일 개수 세기 -->
+   <select id="emailCheck" parameterType="String" resultType="Int" >
+      <![CDATA[
+      select count(*) from user_tbl where user_email = #{user_email}
+      ]]>
+   </select>
+	
+	<select id="loginById" resultType="memberVO" parameterType="memberVO">
+		<![CDATA[
+			select * from user_tbl where user_id = #{user_id} and user_pwd = #{user_pwd}
+		]]>
+	</select>
+	<select id="find_id_Result" resultType="string" parameterType="memberVO">
+		<![CDATA[ select user_id from user_tbl where user_name = #{user_name} and tel = #{tel} ]]>
+	</select>
+
+	<select id="find_pwd_Result" resultType="string" parameterType="memberVO">
+		<![CDATA[ select user_pwd from user_tbl where user_id = #{user_id} and user_name = #{user_name} and user_email = #{user_email}]]>
+	</select>
+
+	<select id="findKakao" resultType="memberVO" parameterType="java.util.HashMap">
+		<![CDATA[
+		 select * from user_tbl where user_id=#{user_id} and user_name=#{user_name} and user_email=#{user_email} ]]>
+	</select>
+
+	<insert id="kakaoInsert" parameterType="java.util.HashMap">
+		<![CDATA[
+		insert into user_tbl(user_no,user_id,user_pwd, tel, user_nick,user_name, user_email, birth_yy, birth_mm,birth_dd,gender) 
+		VALUES((SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k), #{user_id},  CONCAT("카카오사용자",(SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k)),  CONCAT("카카오사용자",(SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k)),  CONCAT("카카오사용자",(SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k)), #{user_name}, #{user_email},  CONCAT("카카오사용자",(SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k)), CONCAT("카카오사용자",(SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k)), CONCAT("카카오사용자",(SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl k)), "K")
+	]]>
+	</insert>
+</mapper>

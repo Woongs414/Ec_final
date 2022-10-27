@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<!-- ※나중에 필수적으로 수정 필요함 -->
+<mapper namespace="mapper.seller">	
+<!-- 		레코드의 컬럼 이름에 대해 memberVO와 같은 속성 값을 지정 -->
+	<resultMap  type="sellerVO" id="memResult" >
+		<result property="seller_num" column="seller_num" /> 
+		<result property="category_code" column="category_code" />
+		<result property="seller_id" column="seller_id" />
+		<result property="seller_pw" column="seller_pw" />
+		<result property="seller_tel" column="seller_tel" />
+		<result property="seller_bizReg" column="seller_bizReg" />
+		<result property="seller_name" column="seller_name" />
+		<result property="seller_email" column="seller_email" />
+		<result property="seller_addr" column="seller_addr" />
+		<result property="addr_num" column="addr_num" />
+		<result property="seller_detailaddr" column="seller_detailaddr"/>
+		<result property="bizReg_image_name" column="bizReg_image_name" />
+		<result property="area" column="area" />
+		<result property="keyword" column="keyword" />
+		<result property="storeInfo_num" column="storeInfo_num" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="store_introduce" column="store_introduce" />
+		<result property="openTime" column="openTime"/>
+		<result property="closeDay" column="closeDay" />
+		<result property="store_nic" column="store_nic" />
+		<result property="store_benefit" column="store_benefit" />
+		<result property ="pro_num" column="pro_num" />
+		<result property ="pro_name" column="pro_name" />
+		<result property = "pro_price" column="pro_price" />
+		<result property = "reg_date" column="reg_date" />
+		<result property = "mod_date" column="mod_date" />
+		<result property = "birth_yy" column="birth_yy" />
+		<result property = "birth_mm" column="birth_mm" />
+		<result property = "birth_dd" column="birth_dd" />
+		<result property = "gender" column="gender" />
+		</resultMap>
+ 	<insert id="insertSellerMember" parameterType="sellerVO">
+		<![CDATA[
+		insert into seller_tbl(seller_num,seller_id,seller_pw,seller_tel,seller_bizReg,seller_name,seller_email,bizReg_image_name,area,category_code,addr_num,seller_addr,seller_detailaddr,keyword,reg_date)
+			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_bizReg},#{seller_name},#{seller_email},"testImg",#{area},#{category_code},#{addr_num},#{seller_addr},#{seller_detailaddr},#{keyword},now())		
+		]]>
+	</insert> 	
+	<!-- 로그인 -->
+	<select id="loginById" resultType="sellerVO" parameterType="sellerVO">
+		<![CDATA[
+			select * from seller_tbl where seller_id = #{seller_id} and seller_pw = #{seller_pw}
+		]]>
+	</select>
+	<!-- 유저아이디 개수 세기 -->
+	<!-- resultType : 결과(보낼)타입 // parameterType : 받아온 값의 타입 -->
+	<select id="SelleridCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from user_tbl where user_id = #{user_id}
+		]]>
+	</select>
+	<!-- 닉네임 개수 세기 -->
+		<select id="SellernickCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from user_tbl where user_nick = #{user_nick}
+		]]>
+	</select>
+		<!-- 이메일 개수 세기 -->
+	<select id="emailCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from seller_tbl where seller_email = #{seller_email}
+		]]>
+	</select>
+			<!-- 번호 개수 세기 -->
+	<select id="SellermobileCheck" parameterType="String" resultType="Int" >
+		<![CDATA[
+		select count(*) from user_tbl where tel = #{mobile}
+		]]>
+	</select>
+	<!-- 로그인 -->
+	<select id="Sller_loginById" resultType="sellerVO" parameterType="sellerVO">
+		<![CDATA[
+			select * from user_tbl where user_id = #{user_id} and user_pwd = #{user_pwd}
+		]]>
+	</select>
+	<!-- 아이디찾기 결과 -->
+	<select id="Seller_find_id_Result" resultType="string" parameterType="sellerVO">
+		<![CDATA[ 
+			select user_id from user_tbl where user_name = #{user_name} and tel = #{tel} 
+		]]>
+	</select>
+	<!-- 비밀번호찾기 결과 -->
+	<select id="Seller_find_pwd_Result" resultType="string" parameterType="sellerVO">
+		<![CDATA[ 
+			select user_pwd from user_tbl where user_id = #{user_id} and user_name = #{user_name} and user_email = #{user_email} 
+		]]>
+	</select>
+
+</mapper>

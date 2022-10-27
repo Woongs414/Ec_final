@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member.xml의 네임 스페이스 지정 -->
+<mapper namespace="mapper.notice">
+	<!-- 레코드의 컬럼 이름에 대해 memberVO와 같은 속성 값을 지정 -->
+	<resultMap type="noticeVO" id="noticeResult">
+		<result property="list_num" column="list_num" />
+		<result property="category_code" column="category_code" />
+		<result property="user_id" column="user_id" />
+		<result property="no_title" column="no_title" />
+		<result property="no_content" column="no_content" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="hits" column="hits" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+	
+	<resultMap id="imgResult" type="imageVO">
+		<result property="image_num" column="image_num" />
+		<result property="list_num" column="list_num" />
+		<result property="origin_fileName" column="origin_fileName" />
+		<result property="image_fileName" column="image_fileName" />
+	</resultMap>
+	<!-- 사용자 공지사항 게시판리스트(페이징 포함) -->
+	<select id="selectAllNoticeList" resultMap="noticeResult" parameterType="int">
+		<![CDATA[ 
+		SELECT * FROM notice_tbl WHERE category_code='9-1' ORDER BY list_num DESC limit #{page},10		
+		 ]]>
+	</select>
+	<!-- 사용자 이벤트 게시판리스트(페이징 포함) -->
+	<select id="selectAllEventList" resultMap="noticeResult" parameterType="int">
+		<![CDATA[ 
+		SELECT * FROM notice_tbl WHERE category_code='9-2' ORDER BY list_num DESC limit #{page},10	
+		 ]]>
+	</select>
+	<!-- 판매자 공지사항 메인페이지 리스트(페이징 포함) -->
+	<select id="selectSellerNoticeList" resultMap="noticeResult" parameterType="int">
+		<![CDATA[ 
+		SELECT * FROM notice_tbl WHERE category_code='9-3' ORDER BY list_num DESC limit #{page},5	
+		 ]]>
+	</select>
+	<!-- 판매자 공지사항 게시판리스트(페이징 포함) -->
+	<select id="selectAllSellerNoticeList" resultMap="noticeResult" parameterType="int">
+		<![CDATA[ 
+		SELECT * FROM notice_tbl WHERE category_code='9-3' ORDER BY list_num DESC limit #{page},10	
+		 ]]>
+	</select>
+	<!-- 사용자 공지사항/이벤트 게시물 보기 -->
+	<select id="selectNotice" resultType="noticeVO" parameterType="int" >
+		<![CDATA[
+			select * from notice_tbl
+			where list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<!-- 게시물 클릭수 -->
+	<update id="addHits" parameterType="int">
+	<![CDATA[
+			update notice_tbl
+			set hits = hits+1
+			where list_num=#{list_num}
+	]]>
+	</update>
+	<!-- 게시물 이미지 저장 -->
+	<select id="selectImageFileList" resultMap="imgResult" parameterType="int" >
+		<![CDATA[
+			select * from image_tbl
+			where list_num=#{list_num} 
+		]]>
+	</select>
+	<!-- 사용자 공지사항 게시판리스트 페이징위한 게시물 숫자세기  -->
+	<select id="selectNoticeCount" resultType="int" >
+		<![CDATA[
+			select count(*) from notice_tbl
+			where category_code='9-1' 
+		]]>
+	</select>
+	<!-- 사용자 이벤트 게시판리스트 페이징위한 게시물 숫자세기  -->
+	<select id="selectEventCount" resultType="int" >
+		<![CDATA[
+			select count(*) from notice_tbl
+			where category_code='9-2' 
+		]]>
+	</select>
+	<!-- 판매자 공지사항 게시판리스트 페이징위한 게시물 숫자세기  -->
+	<select id="selectSellerNoticeCount" resultType="int" >
+		<![CDATA[
+			select count(*) from notice_tbl
+			where category_code='9-3' 
+		]]>
+	</select>
+</mapper>

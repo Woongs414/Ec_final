@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.booking">	
+	<resultMap type="bookingVO" id="bookingResult">
+		<result property="seller_id" column="seller_id" />
+		<result property="user_id" column="user_id" />
+		<result property="user_name" column="user_name" />
+		<result property="reserv_date" column="reserv_date" />
+		<result property="reserv_time" column="reserv_time" />
+		<result property="user_tel" column="user_tel" />
+		<result property="count_pp" column="count_pp" />
+		<result property="user_email" column="user_email" />
+		<result property="reserv_pay" column="reserv_pay" />
+		<result property="reg_date" column="reg_date" />
+		<result property="order_id" column="order_id" />
+		<result property="reserv_status" column="reserv_status" />
+	</resultMap>
+	<select id="selectAllBookingList" resultMap="bookingResult" parameterType="String">
+		<![CDATA[ 
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM book_tbl WHERE seller_id= #{seller_id} AND reserv_status = 2
+			UNION all
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM nouser_book_tbl WHERE seller_id= #{seller_id} AND reserv_status = 2 
+		]]>
+	</select>
+	<!-- 전체 기한 예약 승인 리스트 -->
+	<select id="selectAllBookingSignList" resultMap="bookingResult" parameterType="java.util.Map">
+		<![CDATA[ 
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM book_tbl WHERE seller_id= #{seller_id}
+			UNION all
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM nouser_book_tbl WHERE seller_id= #{seller_id} ORDER BY reg_date DESC limit #{page},10
+		]]>
+	</select>
+	<!-- 오늘 예약 승인 리스트 -->
+	<select id="selectTodayBookingSignList" resultMap="bookingResult" parameterType="java.util.Map">
+		<![CDATA[ 
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM book_tbl WHERE seller_id= #{seller_id} and reg_date = curdate()
+			UNION all
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM nouser_book_tbl WHERE seller_id= #{seller_id} and reg_date = curdate() 
+			ORDER BY reg_date DESC limit #{page},10
+		]]>
+	</select>
+	<!-- 어제 예약 승인 리스트 -->
+	<select id="selectYesterBookingSignList" resultMap="bookingResult" parameterType="java.util.Map">
+		<![CDATA[ 
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM book_tbl WHERE seller_id= #{seller_id} and reg_date >= curdate() - interval 1 day 
+			UNION all
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM nouser_book_tbl WHERE seller_id= #{seller_id} and reg_date >= curdate() - interval 1 day 
+			ORDER BY reg_date DESC limit #{page},10
+		]]>
+	</select>
+	<!-- 판매자 예약 숫자세기  -->
+	<select id="selectSellerBookingCount" resultType="int" parameterType="String">
+		<![CDATA[
+			SELECT SUM(cnt) from(
+			select COUNT(*) AS cnt from book_tbl WHERE seller_id = #{seller_id}
+			UNION all
+			select COUNT(*) AS cnt from nouser_book_tbl WHERE seller_id = #{seller_id}) AS a  
+		]]>
+	</select>
+	<!--단체 예약 승인-유저 -->
+	<update id="updateGroupUserSignOn" parameterType="java.util.Map">
+		UPDATE book_tbl AS a SET a.reserv_status=2 WHERE a.order_id IN
+		<foreach collection="order_ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!--단체 예약 승인-비유저 -->
+	<update id="updateGroupNoUserSignOn" parameterType="java.util.Map">
+		UPDATE nouser_book_tbl AS b SET b.reserv_status=2 WHERE b.order_id IN
+		<foreach collection="order_ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach> 
+	</update>
+	<!--단체 예약 거부-유저 -->
+	<update id="updateGroupUserSignOff" parameterType="java.util.Map">
+		UPDATE book_tbl AS a SET a.reserv_status=3 WHERE a.order_id IN
+		<foreach collection="order_ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!--단체 예약 거부-비유저 -->
+	<update id="updateGroupNoUserSignOff" parameterType="java.util.Map">
+		UPDATE nouser_book_tbl AS b SET b.reserv_status=3 WHERE b.order_id IN
+		<foreach collection="order_ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!--예약 승인-book_TBL -->
+	<update id="updateUserSignOn"  parameterType="String">
+		UPDATE book_tbl AS a SET a.reserv_status=2 WHERE a.order_id = #{order_id} 
+	</update>
+	<!--예약 승인-nouser_book_TBL -->
+	<update id="updateNoUserSignOn"  parameterType="String">
+		UPDATE nouser_book_tbl AS b SET b.reserv_status=2 WHERE b.order_id = #{order_id}
+	</update>
+	<!--예약 거부-유저 -->
+	<update id="updateUserSignOff" parameterType="String">
+		UPDATE book_tbl AS a SET a.reserv_status=3 WHERE a.order_id = #{order_id}
+	</update>
+	<!--예약 거부-비유저 -->
+	<update id="updateNoUserSignOff"  parameterType="String">
+		UPDATE nouser_book_tbl AS b SET b.reserv_status=3 WHERE b.order_id = #{order_id}
+	</update>
+	<!-- 메인페이지 금일 예약 건수  -->
+	<select id="selectTodayBooking" resultType="int" parameterType="String">
+		<![CDATA[
+			SELECT SUM(cnt) from(
+			select COUNT(*) AS cnt from book_tbl WHERE seller_id = #{seller_id} and reg_date = curdate()
+			UNION all
+			select COUNT(*) AS cnt from nouser_book_tbl WHERE seller_id = #{seller_id} and reg_date = curdate()) AS a  
+		]]>
+	</select>
+</mapper>

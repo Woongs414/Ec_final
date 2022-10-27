@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member.xml의 네임 스페이스 지정 -->
+<mapper namespace="mapper.seller.menu">
+	<resultMap type="productVO" id="proResult">
+		<result property="pro_num" column="pro_num" />
+		<result property="category_code" column="category_code" />
+		<result property="seller_id" column="seller_id" />
+		<result property="pro_name" column="pro_name" />
+		<result property="pro_price" column="pro_price" />
+		<result property="pro_stock" column="pro_stock" />
+		<result property="pro_count" column="pro_count" />
+		<result property="sales" column="sales" />
+		<result property="commision" column="commision" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+		<result property="pro_sum" column="pro_sum" />
+		<result property="pro_img" column="pro_img" />
+		<result property="reg_days" column="reg_days" />
+	</resultMap>
+	
+	<resultMap type="StoreinfosumVO" id="infosumResult">
+		<result property="storeInfo_num" column="storeInfo_num" />
+		<result property="seller_id" column="seller_id" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="store_introduce" column="store_introduce" />
+		<result property="openTime" column="openTime" />
+		<result property="closeDay" column="closeDay" />
+		<result property="store_nic" column="store_nic" />
+		<result property="store_benefit" column="store_benefit" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+		<result property="open_time" column="open_time" />
+		<result property="close_time" column="close_time" />
+		<result property="min_People" column="min_People" />
+		<result property="max_People" column="max_People" />
+		<result property="reserv_pay" column="reserv_pay" />
+		<result property="wish_sum" column="wish_sum" />
+		<result property="review_sum" column="review_sum" />
+		<result property="book_sum" column="book_sum" />
+	</resultMap>
+	
+	
+	
+	<select id="selectMenu" resultMap="proResult" parameterType="String">
+		<![CDATA[ 
+		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} ORDER BY reg_date DESC		
+		 ]]>
+	</select>
+	
+	<select id="selectsearchMenu" resultMap="proResult" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} and pro_name like CONCAT('%',#{search},'%') ORDER BY reg_date DESC		
+		 ]]>
+	</select>
+	
+	<delete id="deletemenu" parameterType="java.util.HashMap">
+		DELETE FROM product_tbl WHERE seller_id = #{seller_id}
+        and pro_num IN 
+        <foreach collection="params" item="item" index="index" separator="," open="(" close=")">
+         #{item}
+         </foreach>
+	</delete>
+	
+	<select id="menudetail" resultMap="proResult" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} and pro_num = #{pro_num}		
+		 ]]>
+	</select>
+	
+	<select id="selectinfosum" resultMap="infosumResult" parameterType="String">
+		<![CDATA[ 
+		SELECT *, (SELECT COUNT(*) FROM wish_tbl WHERE seller_id = #{seller_id}) AS wish_sum, (SELECT COUNT(*) FROM review_tbl WHERE seller_id = #{seller_id}) AS review_sum, (SELECT COUNT(*) FROM book_tbl WHERE seller_id = #{seller_id}) AS book_sum FROM storeinfo_tbl WHERE seller_id=#{seller_id}
+		 ]]>
+	</select>
+	
+	<delete id="delonemenu" parameterType="java.util.HashMap">
+		<![CDATA[
+		DELETE FROM product_tbl WHERE seller_id = #{seller_id} and pro_num = #{pro_num}
+		]]>
+	</delete>
+	
+	
+	<update id="modProduct" parameterType="productVO" >
+			update product_tbl
+			set pro_name = #{pro_name},
+			pro_price = #{pro_price},
+			pro_desc = #{pro_desc},
+			mod_date = now()
+			<if test="pro_img != '' and pro_img != null">
+			, pro_img = #{pro_img} 
+			</if>
+			where pro_num=#{pro_num} and seller_id = #{seller_id}
+	</update>
+	
+	
+	<insert id="menumadd" parameterType="java.util.HashMap">
+		INSERT INTO product_tbl SET 
+		pro_num = (select max(pro_num)+1 from product_tbl a)  , category_code = #{category_code}, seller_id = #{seller_id} , pro_name= #{pro_name}, pro_price=#{pro_price}, pro_desc=#{pro_desc}, reg_date = NOW()
+		<if test="pro_img != '' and pro_img != null">
+			, pro_img = #{pro_img} 
+		</if>
+	</insert>
+	
+	
+	
+	
+	
+</mapper>

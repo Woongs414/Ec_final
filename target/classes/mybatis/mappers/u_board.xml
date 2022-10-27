@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member.xml의 네임 스페이스 지정 -->
+<mapper namespace="mapper.board">
+	<!-- 레코드의 컬럼 이름에 대해 memberVO와 같은 속성 값을 지정 -->
+	<resultMap type="boardVO" id="boardsResult">
+		<result property="list_num" column="list_num" />
+		<result property="parent_num" column="parent_num" />
+		<result property="category_code" column="category_code" />
+		<result property="user_id" column="user_id" />
+		<result property="u_title" column="u_title" />
+		<result property="u_content" column="u_content" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="hits" column="hits" />
+		<result property="liked" column="liked" />
+		<result property="bad" column="bad" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+	
+	<resultMap id="imgResult" type="imageVO">
+		<result property="image_num" column="image_num" />
+		<result property="list_num" column="list_num" />
+		<result property="origin_fileName" column="origin_fileName" />
+		<result property="image_fileName" column="image_fileName" />
+	</resultMap>
+	
+	<resultMap id="commResult" type="commentVO">
+		<result property="comment_num" column="comment_num" />
+		<result property="list_num" column="list_num" />
+		<result property="comments" column="comments" />
+		<result property="comment_id" column="comment_id" />
+		<result property="parent_num" column="parent_num" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+	
+	<resultMap id="likedResult" type="likedVO">
+		<result property="liked_num" column="liked_num" />
+		<result property="user_id" column="user_id" />
+		<result property="list_num" column="list_num" />
+		<result property="liked" column="liked" />
+	</resultMap>
+	
+	<resultMap id="badResult" type="badVO">
+		<result property="bad_num" column="bad_num" />
+		<result property="user_id" column="user_id" />
+		<result property="list_num" column="list_num" />
+		<result property="bad" column="bad" />
+	</resultMap>
+	
+	<select id="selectAllBoardsList" resultMap="boardsResult" parameterType="int">
+		<![CDATA[ 
+		SELECT * FROM u_board_tbl ORDER BY list_num DESC limit #{page},10		
+		 ]]>
+	</select>
+	
+	<select id="selectEatBoardsList" resultMap="boardsResult">
+		<![CDATA[
+		SELECT * FROM u_board_tbl WHERE category_code=1 ORDER BY list_num DESC limit #{page},10
+		 ]]>
+	</select>
+	
+	<select id="selectSeeBoardsList" resultMap="boardsResult">
+		<![CDATA[ 
+		SELECT * FROM u_board_tbl WHERE category_code=2 ORDER BY list_num DESC limit #{page},10	
+		 ]]>
+	</select>
+	
+	<select id="selectAllCommentsList" resultMap="commResult" parameterType="int" >
+		<![CDATA[
+			SELECT * FROM u_comments_tbl WHERE list_num = #{list_num} ORDER BY comment_num			
+		 ]]>
+	</select>
+  
+	<insert id="insertNewBoard" parameterType="java.util.Map">
+		<![CDATA[
+			insert into u_board_tbl(list_num, parent_num, category_code, user_id, u_title,u_content,reg_date, mod_date, image_fileName)
+			values(#{list_num}, #{parent_num}, #{category_code}, #{user_id}, #{u_title},#{u_content},now(),now(),#{image_fileName} )			
+		 ]]>
+	</insert>  
+  
+	<insert id="insertNewComment" parameterType="java.util.Map">
+		<![CDATA[
+			insert into u_comments_tbl(comment_num, parent_num, list_num, comments, comment_id)
+			values(#{comment_num}, #{parent_num}, #{list_num}, #{comments}, #{comment_id})			
+		 ]]>
+	</insert>
+	
+	<select id="selectNewList_num" resultType="int">
+		<![CDATA[
+			select max(list_num)+1 from u_board_tbl 			
+		 ]]>
+	</select>
+	
+	<select id="selectNewComment_num" resultType="int">
+		<![CDATA[
+			select max(comment_num)+1 from u_comments_tbl 			
+		 ]]>
+	</select>
+
+	<select id="selectBoard" resultType="boardVO" parameterType="int" >
+		<![CDATA[
+			select * from u_board_tbl
+			where list_num = #{list_num} 			
+		 ]]>
+	</select>
+  	
+	<update id="addHits" parameterType="int">
+	<![CDATA[
+			update u_board_tbl
+			set hits = hits+1
+			where list_num=#{list_num}
+	]]>
+	</update>
+	
+	<select id="selectImageFileList" resultMap="imgResult" parameterType="int" >
+		<![CDATA[
+			select * from u_image_tbl
+			where list_num=#{list_num} 
+		]]>
+	</select>
+	<select id="selectEatBoardCount" resultType="int" >
+		<![CDATA[
+			select count(*) from u_board_tbl
+			where category_code=1; 
+		]]>
+	</select>
+	<select id="selectSeeBoardCount" resultType="int" >
+		<![CDATA[
+			select count(*) from u_board_tbl
+			where category_code=2; 
+		]]>
+	</select>
+	<select id="selectAllBoardCount" resultType="int" >
+		<![CDATA[
+			select count(*) from u_board_tbl 
+		]]>
+	</select>
+	<insert id="insertNewImage" parameterType="ImageVO">
+	<![CDATA[
+			insert into u_image_tbl (image_num, list_num, origin_fileName,image_fileName)
+			values(#{image_num}, #{list_num}, #{origin_fileName}, #{image_fileName})
+		]]>
+	</insert>
+	<select id="selectNewImage_num" resultType="int">
+		<![CDATA[
+			select max(image_num)+1 from u_image_tbl 			
+		 ]]>
+	</select>
+	<update id="likeUp" parameterType="int">
+		<![CDATA[
+			update u_board_tbl liked SET liked= liked+1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<update id="likeDown" parameterType="int">
+		<![CDATA[
+			update u_board_tbl liked SET liked= liked-1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<select id="selectNewLiked_num" resultType="int">
+		<![CDATA[
+			select max(liked_num)+1 from u_board_liked_tbl 			
+		 ]]>
+	</select>
+	<select id="selectLiked" resultType="String" parameterType="java.util.Map">
+		<![CDATA[
+			select liked from u_board_liked_tbl where user_id = #{user_id} and list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<insert id="insertNewLiked" parameterType="likedVO">
+	<![CDATA[
+			insert into u_board_liked_tbl (liked_num, user_id, list_num, liked)
+			values(#{liked_num}, #{user_id}, #{list_num}, #{liked})
+		]]>
+	</insert>
+	<update id="modLiked" parameterType="java.util.Map">
+	<![CDATA[
+			update u_board_liked_tbl liked set liked = #{liked}
+			where user_id = #{user_id} and list_num = #{list_num}
+		]]>
+	</update>
+	<select id="selectBoardLiked" resultType="int" parameterType="int">
+		<![CDATA[
+			select liked from u_board_tbl where list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<update id="badUp" parameterType="int">
+		<![CDATA[
+			update u_board_tbl bad SET bad= bad+1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<update id="badDown" parameterType="int">
+		<![CDATA[
+			update u_board_tbl bad SET bad= bad-1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<select id="selectNewBad_num" resultType="int">
+		<![CDATA[
+			select max(bad_num)+1 from u_board_bad_tbl 			
+		 ]]>
+	</select>
+	<select id="selectBad" resultType="String" parameterType="java.util.Map">
+		<![CDATA[
+			select bad from u_board_bad_tbl where user_id = #{user_id} and list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<insert id="insertNewBad" parameterType="badVO">
+	<![CDATA[
+			insert into u_board_bad_tbl (bad_num, user_id, list_num, bad)
+			values(#{bad_num}, #{user_id}, #{list_num}, #{bad})
+		]]>
+	</insert>
+	<update id="modBad" parameterType="java.util.Map">
+	<![CDATA[
+			update u_board_bad_tbl bad set bad = #{bad}
+			where user_id = #{user_id} and list_num = #{list_num}
+		]]>
+	</update>
+	<select id="selectBoardBad" resultType="int" parameterType="int">
+		<![CDATA[
+			select bad from u_board_tbl where list_num = #{list_num} 			
+		 ]]>
+	</select>
+	
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			DELETE FROM u_board_tbl WHERE list_num = #{list_num}
+		]]>
+	</delete>
+	
+	<update id="updateBoard" parameterType="java.util.Map" >
+		update u_board_tbl
+		set u_title = #{u_title},
+		u_content = #{u_content},
+		mod_date = now()
+		<if test="image_fileName != '' and image_fileName != null">
+		, image_fileName = #{image_fileName} 
+		</if>
+		where list_num=#{list_num}
+	</update>
+	
+	<update id="updateImage" parameterType="ImageVO" >
+		update u_image_tbl
+		set
+		image_fileName  = #{image_fileName}
+		,origin_fileName = #{origin_fileName}
+		where list_num=#{list_num}
+	</update>
+</mapper>

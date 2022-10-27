@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.wish">	
+	<resultMap id="wishResult" type="wishVO">
+		<result column="wish_num" property="wish_num" />
+		<result column="category_code" property="category_code" />
+		<result column="user_id" property="user_id" />
+		<result column="seller_id" property="seller_id" />
+		<result column="wish_sum" property="wish_sum" />
+		<result column="reg_date" property="reg_date" />
+	</resultMap>
+
+	<select id="selectTodayWish" resultType="int" parameterType="String" >
+		<![CDATA[
+			select COUNT(*) AS cnt from wish_tbl WHERE seller_id = #{seller_id} and reg_date = curdate()
+		]]>
+	</select>
+</mapper>

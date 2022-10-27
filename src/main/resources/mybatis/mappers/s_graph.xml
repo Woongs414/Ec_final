@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.graph">	
+	<resultMap type="graphVO" id="graphResult">
+		<result property="months" column="months" />
+		<result property="count" column="count" />
+	</resultMap>
+	<!-- 월별 예약 건수 -->
+	<select id="selectMonthsBooking" resultMap="graphResult" parameterType="String">
+		<![CDATA[
+			select DATE_FORMAT(b.reserv_date, '%m') months, count(*) count
+			FROM (
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM book_tbl WHERE seller_id= #{seller_id} AND reserv_status = 2 AND reserv_date LIKE CONCAT(YEAR(NOW()),'%')
+			UNION all
+			SELECT seller_id,user_name,user_tel,user_email,reserv_date,reserv_time,order_id,reg_date,count_pp,
+			reserv_status FROM nouser_book_tbl WHERE seller_id= #{seller_id} AND reserv_status = 2 AND reserv_date LIKE CONCAT(YEAR(NOW()),'%')
+			) AS b group by DATE_FORMAT(b.reserv_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 리뷰 수 -->
+	<select id="selectMonthsReview" resultMap="graphResult" parameterType="String">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM review_tbl AS b WHERE b.seller_id = #{seller_id}
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	
+	<!-- 월별 찜 수 -->
+	<select id="selectMonthsWish" resultMap="graphResult" parameterType="String">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM review_tbl AS b WHERE b.seller_id = #{seller_id}
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.spring.ec.user.vo.BoardVO"
+			alias="boardVO" />
+		<typeAlias type="com.spring.ec.user.vo.ImageVO"
+			alias="imageVO" />
+		<typeAlias type="com.spring.ec.user.vo.CommentVO"
+			alias="commentVO" />
+		<typeAlias type="com.spring.ec.seller.vo.StoreVO"
+			alias="storeVO" />
+		<typeAlias type="com.spring.ec.seller.vo.SellerVO"
+			alias="sellerVO" />
+		<typeAlias type="com.spring.ec.seller.vo.ProductVO"
+			alias="productVO" />
+		<typeAlias type="com.spring.ec.user.vo.ReviewVO"
+			alias="reviewVO" />
+		<typeAlias type="com.spring.ec.user.vo.ReservVO"
+			alias="reservVO" />
+		<typeAlias type="com.spring.ec.user.vo.MemberVO"
+			alias="memberVO" />
+		<typeAlias type="com.spring.ec.user.vo.WishVO"
+			alias="wishVO" />
+		<typeAlias type="com.spring.ec.user.vo.NoticeVO"
+			alias="noticeVO" />
+		<typeAlias type="com.spring.ec.kakao.vo.KakaoVO"
+			alias="kakaoVO" />
+		<typeAlias type="com.spring.ec.user.vo.LikedVO"
+			alias="likedVO" />
+		<typeAlias type="com.spring.ec.user.vo.BadVO" alias="badVO" />
+		<typeAlias type="com.spring.ec.user.vo.AskVO" alias="askVO" />
+		<typeAlias type="com.spring.ec.seller.vo.BookingVO" alias="bookingVO" />
+		<typeAlias type="com.spring.ec.seller.vo.StoreinfosumVO" alias="storeinfosumVO" />
+		<typeAlias type="com.spring.ec.seller.vo.GraphVO" alias="graphVO" />
+		<typeAlias type="com.spring.ec.seller.vo.ReviewAnsVO" alias="reAnsVO" />
+	</typeAliases>
+</configuration>
