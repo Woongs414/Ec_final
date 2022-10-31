@@ -19,6 +19,8 @@
 		<result property="birth_mm" column="birth_mm" />
 		<result property="birth_dd" column="birth_dd" />
 		<result property="gender" column="gender" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
 		</resultMap>
 	
 	
@@ -27,8 +29,8 @@
 	
  	<insert id="insertMember" parameterType="memberVO">
 		<![CDATA[
-		insert into user_tbl(user_no,user_id,user_nick, user_pwd,tel,user_name, user_email, birth_yy, birth_mm, birth_dd, gender)
-			values((SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl b), #{user_id}, #{user_nick},#{user_pwd}, #{tel}, #{user_name}, #{user_email}, #{birth_yy},#{birth_mm},#{birth_dd}, #{gender})
+		insert into user_tbl(user_no,user_id,user_nick, user_pwd,tel,user_name, user_email, birth_yy, birth_mm, birth_dd, gender,reg_date,mod_date)
+			values((SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl b), #{user_id}, #{user_nick},#{user_pwd}, #{tel}, #{user_name}, #{user_email}, #{birth_yy},#{birth_mm},#{birth_dd}, #{gender},now(),now())
 	 		
 		]]>
 	</insert> 

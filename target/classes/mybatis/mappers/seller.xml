@@ -38,10 +38,10 @@
 		<result property = "birth_dd" column="birth_dd" />
 		<result property = "gender" column="gender" />
 		</resultMap>
- 	<insert id="insertSellerMember" parameterType="sellerVO">
+ 	<insert id="insertSellerMember" parameterType="java.util.HashMap">
 		<![CDATA[
 		insert into seller_tbl(seller_num,seller_id,seller_pw,seller_tel,seller_bizReg,seller_name,seller_email,bizReg_image_name,area,category_code,addr_num,seller_addr,seller_detailaddr,keyword,reg_date)
-			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_bizReg},#{seller_name},#{seller_email},"testImg",#{area},#{category_code},#{addr_num},#{seller_addr},#{seller_detailaddr},#{keyword},now())		
+			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_bizReg},#{seller_name},#{seller_email},#{bizReg_image_name},#{area},#{category_code},#{addr_num},#{seller_addr},#{seller_detailaddr},#{keyword},now())		
 		]]>
 	</insert> 	
 	<!-- 로그인 -->

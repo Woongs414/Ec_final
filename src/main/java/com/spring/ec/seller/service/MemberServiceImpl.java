@@ -1,12 +1,13 @@
 package com.spring.ec.seller.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.spring.ec.seller.dao.MemberDAO;
 import com.spring.ec.seller.vo.SellerVO;
-import com.spring.ec.user.vo.MemberVO;
 
 @Service("sellerService")
 public class MemberServiceImpl implements MemberService {
@@ -14,8 +15,8 @@ public class MemberServiceImpl implements MemberService {
 	MemberDAO memberDAO;
 	
 	@Override
-	public int addMember(SellerVO sellerVO) throws DataAccessException {
-		return memberDAO.insertMember(sellerVO);
+	public int addMember(Map map) throws DataAccessException {
+		return memberDAO.insertMember(map);
 	}
 	
 	@Override

@@ -1,14 +1,27 @@
 package com.spring.ec.seller.controller;
 
+import java.io.File;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,6 +30,7 @@ import com.spring.ec.seller.vo.SellerVO;
 
 @Controller("sellerController")
 public class MemberControllerImpl implements MemberController {
+	private static final String S_IMAGE_REPO = "C:\\board\\bizReg_image_name";
 	@Autowired
 	private MemberService memService;
 	@Autowired
@@ -54,15 +68,76 @@ public class MemberControllerImpl implements MemberController {
 	
 	@Override
 	@RequestMapping(value = "/seller/addMember.do", method = RequestMethod.POST)
-	public ModelAndView addMember(@ModelAttribute("member") SellerVO sellerVO, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("html/text;charset=utf-8");
-		int result = 0;
-		sellerVO.setKeyword(request.getParameter("keyword"));
-		result = memService.addMember(sellerVO);
-		ModelAndView mav = new ModelAndView("redirect:/seller/member/loginForm.do");
-		return mav;
+	@ResponseBody
+	public ResponseEntity addMember(MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		Map sdetailMap = new HashMap();
+		Enumeration enu = multipartRequest.getParameterNames(); //while과정을 통해서 모든 값 받아옴
+		while(enu.hasMoreElements()) {
+			String name = (String)enu.nextElement();
+			String value = multipartRequest.getParameter(name);
+			sdetailMap.put(name, value);
+		}
+		
+		String bizReg_image_name = upload(multipartRequest);
+		sdetailMap.put("bizReg_image_name", bizReg_image_name);
+		HttpSession session = multipartRequest.getSession();
+		
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			
+			response.setContentType("html/text;charset=utf-8");
+			int result = 0;
+			sdetailMap.put("keyword", request.getParameter("keyword"));
+			
+			result = memService.addMember(sdetailMap);
+			if(bizReg_image_name !=null && bizReg_image_name.length() != 0) {
+				File srcFile = new File(S_IMAGE_REPO + "\\" + "temp" + "\\" + bizReg_image_name);
+				File destDir = new File(S_IMAGE_REPO + "\\" + sdetailMap.get("seller_id"));
+				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+			}			
+			message = "<script>";
+			message += " alert('회원가입이 완료되었습니다.');";
+			message += " location.href='" + multipartRequest.getContextPath() +"/seller/member/loginForm.do'";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		} catch (Exception e) {
+			File srcFile = new File(S_IMAGE_REPO + "\\" + "temp" + "\\" + bizReg_image_name);
+			srcFile.delete();
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해 주세요');";
+			message += " location.href='" + multipartRequest.getContextPath() + "/error.do'; ";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}	
+
+	
+	
+	//이미지 한개 수정/등록
+	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception{
+		String bizReg_image_name = null;
+		Iterator<String> fileNames = multipartRequest.getFileNames();
+		while(fileNames.hasNext()) {
+			String fileName = fileNames.next();
+			MultipartFile mFile = multipartRequest.getFile(fileName);
+			bizReg_image_name = mFile.getOriginalFilename();
+			
+			File file = new File(S_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
+			if(mFile.getSize() !=0) {
+				if(!file.exists()) {
+					file.getParentFile().mkdirs();
+					mFile.transferTo(new File(S_IMAGE_REPO + "\\" + "temp" + "\\" + bizReg_image_name));
+				}
+			}
+		}
+		return bizReg_image_name;
 	}
 	
 	@Override

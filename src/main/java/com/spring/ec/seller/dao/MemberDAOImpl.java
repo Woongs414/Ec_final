@@ -1,12 +1,13 @@
 package com.spring.ec.seller.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.spring.ec.seller.vo.SellerVO;
-import com.spring.ec.user.vo.MemberVO;
 
 @Repository("sellerMemberDAO")
 public class MemberDAOImpl implements MemberDAO {
@@ -14,8 +15,8 @@ public class MemberDAOImpl implements MemberDAO {
 	private SqlSession sqlSession;
 	// 회원가입
 		@Override
-		public int insertMember(SellerVO sellerVO) throws DataAccessException {
-			int result = sqlSession.insert("mapper.seller.insertSellerMember", sellerVO);
+		public int insertMember(Map map) throws DataAccessException {
+			int result = sqlSession.insert("mapper.seller.insertSellerMember", map);
 			return result;
 		}
 		

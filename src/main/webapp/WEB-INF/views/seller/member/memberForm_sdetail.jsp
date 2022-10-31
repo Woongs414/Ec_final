@@ -234,7 +234,7 @@ label {
 							<label for="chooseFile"> <br> 👉 파일첨부 👈
 							</label>
 						</div>
-						<input type="file" id="chooseFile" accept="image/*"
+						<input type="file" id="chooseFile" accept="image/*" name="bizReg_image_name"
 							onchange="loadFile(this)">
 
 						<div class="fileContainer">
@@ -563,7 +563,7 @@ label {
 				f.action = "${contextPath}/seller/addMember.do?keyword="
 						+ keyword;
 				f.submit();
-				alert("회원가입을 축하드립니다.");
+			
 			}
 		}
 	</script>

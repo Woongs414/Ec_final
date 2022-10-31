@@ -252,7 +252,7 @@ public class InfoControllerImpl implements InfoController  {
 			response.setContentType("text/html; charset=UTF-8");
 			multipartRequest.setCharacterEncoding("utf-8");
 			Map<String, Object> menuMap  = new HashMap<String, Object>();
-			Enumeration enu = multipartRequest.getParameterNames();
+			Enumeration enu = multipartRequest.getParameterNames(); //파일속성을 제외한 것들만 가져올수있음
 			while (enu.hasMoreElements()) {
 				String name = (String) enu.nextElement();
 				String value = multipartRequest.getParameter(name);
@@ -280,7 +280,7 @@ public class InfoControllerImpl implements InfoController  {
 			try {
 				int articleNO = infoService.menumadd(menuMap);
 				if (imageFileName != null && imageFileName.length() != 0) {
-					File srcFile = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+					File srcFile = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName); 
 					File destDir = new File(MENU_IMAGE_REPO + "\\" + "menu" + "\\" + seller_id);
 					FileUtils.moveFileToDirectory(srcFile, destDir, true);
 				}
@@ -308,17 +308,17 @@ public class InfoControllerImpl implements InfoController  {
 		private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
 			String imageFileName = null;
 			Map<String, String> menuMap = new HashMap<String, String>();
-			Iterator<String> fileNames = multipartRequest.getFileNames();
+			Iterator<String> fileNames = multipartRequest.getFileNames(); //파일이름(이미지.jpg명은아님) 받아오기
 			while (fileNames.hasNext()) {
 				String fileName = fileNames.next();
-				MultipartFile mFile = multipartRequest.getFile(fileName);
-				imageFileName = mFile.getOriginalFilename();
+				MultipartFile mFile = multipartRequest.getFile(fileName); //파일의 이름을 가지고 파일의 정보를 mFile에 저장
+				imageFileName = mFile.getOriginalFilename(); // 이미지.jpg가 들어감
 				
-				File file = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
+				File file = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + fileName); //temp라는 임시폴더생성
 				if (mFile.getSize() != 0) {
 					if (!file.exists()) {
 						file.getParentFile().mkdirs();
-						mFile.transferTo(new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName));
+						mFile.transferTo(new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName)); //temp파일안에 이미지파일 저장
 					}
 				}
 			}
