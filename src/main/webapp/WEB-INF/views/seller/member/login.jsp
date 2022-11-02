@@ -34,6 +34,15 @@
       </script>
    </c:when>
 </c:choose>
+	<script>
+	<!-- controller login.do참고 -->
+	$(document).ready(function() {
+		if(${result =="loginFailed"}){
+			alert("아이디와 비밀번호를 확인해주세요.");
+		}
+	});
+	
+	</script>
 </head>
 <body class="login-page" style="min-height: 496.781px;">
 <div class="login-box" style="width:500px;">
@@ -105,16 +114,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-<script>
-	<!-- controller login.do참고 -->
-	$(document).ready(function() {
-		if(${result =="loginFailed"}){
-			alert("아이디와 비밀번호를 확인해주세요.");
-		}
-	});
-	
 
-	</script>
 
 </body>
 </html>

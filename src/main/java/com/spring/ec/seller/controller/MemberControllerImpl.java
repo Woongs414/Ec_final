@@ -73,14 +73,14 @@ public class MemberControllerImpl implements MemberController {
 			throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
 		Map sdetailMap = new HashMap();
-		Enumeration enu = multipartRequest.getParameterNames(); //while과정을 통해서 모든 값 받아옴
-		while(enu.hasMoreElements()) {
-			String name = (String)enu.nextElement();
-			String value = multipartRequest.getParameter(name);
+		Enumeration enu = multipartRequest.getParameterNames(); //폼에 있는(input name)파라미터 값을 한꺼번에 받아온다.
+		while(enu.hasMoreElements()) { // 폼에서 넘어온 파라이터값이 더 있는동안
+			String name = (String)enu.nextElement(); //nextElement() 메소드를 통해 파라미터 값을 차례대로 가져와 name 변수에 저장한다.
+			String value = multipartRequest.getParameter(name); //폼에서 가져온 값을 value 저장한다.
 			sdetailMap.put(name, value);
 		}
 		
-		String bizReg_image_name = upload(multipartRequest);
+		String bizReg_image_name = upload(multipartRequest); //upload메소드를 통해서 temp폴더생성하고 이미지파일 넣어준다.
 		sdetailMap.put("bizReg_image_name", bizReg_image_name);
 		HttpSession session = multipartRequest.getSession();
 		
@@ -98,7 +98,7 @@ public class MemberControllerImpl implements MemberController {
 			if(bizReg_image_name !=null && bizReg_image_name.length() != 0) {
 				File srcFile = new File(S_IMAGE_REPO + "\\" + "temp" + "\\" + bizReg_image_name);
 				File destDir = new File(S_IMAGE_REPO + "\\" + sdetailMap.get("seller_id"));
-				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				FileUtils.moveFileToDirectory(srcFile, destDir, true); //temp폴더에 있는 이미지파일을 seller_id폴더 만들어서 이동시켜준다.
 			}			
 			message = "<script>";
 			message += " alert('회원가입이 완료되었습니다.');";

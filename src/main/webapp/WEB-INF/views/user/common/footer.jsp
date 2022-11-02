@@ -24,7 +24,7 @@ request.setCharacterEncoding("utf-8");
 	word-wrap: break-word;
 	letter-spacing: 2px;
 	margin-top: 10px;
-	height: 100%;
+	height: 0px;
 	position: absolute;
 	width: 100%;
 	min-height: 200px;

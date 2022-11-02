@@ -75,7 +75,7 @@ mobile.addEventListener("focusout", checkPhoneNum);
 
 
 function checkId() {
-    var idPattern = /^[a-z]+[a-z0-9]{4,20}$/g;
+    var idPattern = /^[a-z0-9]{5,20}$/;
     if(id.value === "") {
         error[0].innerHTML = "필수 정보입니다.";
         error[0].style.display = "block";
@@ -92,13 +92,13 @@ function checkId() {
 }
 
 function checkNick() {
-    var nickPattern = /^[a-zA-Z0-9가-힣][a-zA-Z0-9가-힣 ]{2,16}$/;
+    var nickPattern = /^[a-zA-Z0-9가-힣]{2,15}$/;
     if(nick.value === "") {
         error[1].innerHTML = "필수 정보입니다.";
         error[1].style.display = "block";
         nickSignal = false;
     } else if(!nickPattern.test(nick.value)) {
-        error[1].innerHTML = "한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)";
+        error[1].innerHTML = "한글과 영문 대소문자, 숫자만 사용하세요. (특수기호, 공백 사용 불가)";
         error[1].style.display = "block";
         nickSignal = false;
     } else {
@@ -108,13 +108,13 @@ function checkNick() {
 }
 
 function checkPw() {
-    var pwPattern = /^(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^&*])[a-z0-9~!@#$%^&*]{4,20}$/; /*/[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;*/
+    var pwPattern = /^(?=.*[a-z])(?=.*\d)(?=.*[$@$!%*#?&])[a-z\d$@$!%*#?&]{8,16}$/;
     if(pw1.value === "") {
         error[2].innerHTML = "필수 정보입니다.";
         error[2].style.display = "block";
         pswd1Signal = false;
     } else if(!pwPattern.test(pw1.value)) {
-        error[2].innerHTML = "8~16자 영문 소문자, 숫자, 특수문자를 사용하세요.";
+        error[2].innerHTML = "8~16자 영문 소문자, 숫자, 특수문자를 조합하세요.";
         pwMsg.innerHTML = "사용불가";
         pwMsgArea.style.paddingRight = "93px";
        
@@ -152,13 +152,13 @@ function comparePw() {
 }
 
 function checkName() {
-    var namePattern = /^[a-zA-Z가-힣][a-zA-Z가-힣 ]*$/;
+    var namePattern = /^[a-zA-Z가-힣]{2,15}$/;
     if(userName.value === "") {
         error[4].innerHTML = "필수 정보입니다.";
         error[4].style.display = "block";
          nameSignal = false;
     } else if(!namePattern.test(userName.value)) {
-        error[4].innerHTML = "한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)";
+        error[4].innerHTML = "2~15자의 한글과 영문 대 소문자만 사용하세요.";
         error[4].style.display = "block";
          nameSignal = false;
     } else {
@@ -238,7 +238,7 @@ function isBirthRight() {
 
 
 function isEmailCorrect() {
-    var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
     if(email.value == ""){ 
     console.log("7");

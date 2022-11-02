@@ -24,7 +24,7 @@
 height: 100px;
 }
 #container {
-height: 1500px;
+height: 1000px;
 }
 
 </style>
