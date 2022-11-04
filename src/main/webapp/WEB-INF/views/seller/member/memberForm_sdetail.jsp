@@ -120,9 +120,18 @@ label {
 					<!-- NAME -->
 					<div>
 						<h3 class="join_title">
-							<label for="name">이름</label>
+							<label for="name1">사업자명</label>
 						</h3>
-						<span class="box int_name"> <input type="text" id="name"
+						<span class="box int_name"> <input type="text" id="name1"
+							name="s_name" class="int" maxlength="10">
+						</span> <span class="error_next_box"></span>
+					</div>
+					<!-- NAME2 -->
+					<div>
+						<h3 class="join_title">
+							<label for="name2">상호명</label>
+						</h3>
+						<span class="box int_name"> <input type="text" id="name2"
 							name="seller_name" class="int" maxlength="20">
 						</span> <span class="error_next_box"></span>
 					</div>
@@ -526,9 +535,13 @@ label {
 			else if (f.pswd2.value.length < 1) {
 				alert("비밀번호 확인을 입력하세요.");
 				f.pswd2.value.focus
-			}// 이름 비어 있는가?
-			else if (f.name.value.length < 1) {
-				alert("이름을 입력하세요.");
+			}// 사업자명 비어 있는가?
+			else if (f.name1.value.length < 1) {
+				alert("사업자명을 입력하세요.");
+				f.name.value.focus
+		  	 }// 사업장명 비어 있는가?
+			else if (f.name2.value.length < 1) {
+				alert("사업장명을 입력하세요.");
 				f.name.value.focus
 		  	 } else if (f.email.value.length < 1) {
 				alert("이메일을 입력하세요.");

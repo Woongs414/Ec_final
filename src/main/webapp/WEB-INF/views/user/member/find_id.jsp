@@ -14,11 +14,11 @@ request.setCharacterEncoding("utf-8");
 <head>
 <script>
 	function id_search(f) {
-		var isName = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]*$/;
+		var isName = /^[a-zA-Z가-힣]{2,15}$/;
 		var isNum = /^01(?:0|1|[6-9])(?:\d{4})\d{4}$/;
 		
 		if (!isName.test(user_name.value)) {
-			alert("이름을 입력해주세요");
+			alert("2~15자의 한글과 영문 대 소문자만 사용하세요.");
 
 		} else if (!isNum.test(tel.value)) {
 			alert("핸드폰 번호를 정확하게 입력해주세요");

@@ -175,6 +175,72 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 	
+	@Override
+	@RequestMapping(value ="/seller/member/find_id.do", method = RequestMethod.GET)
+	public ModelAndView find_id(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@Override
+	@RequestMapping(value ="/seller/member/find_pwd.do", method = RequestMethod.GET)
+	public ModelAndView find_pw(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@Override
+	@RequestMapping(value = "/seller/member/find_id_result.do", method = RequestMethod.POST)
+	public ModelAndView find_id_result( HttpServletRequest request,HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		String s_name = request.getParameter("s_name");
+		String seller_bizReg = request.getParameter("seller_bizReg");
+		sellerVO.setS_name(s_name); //db값과 비교하기위해 sellerVO의 set메서드를 이용해 값 저장
+		sellerVO.setSeller_bizReg(seller_bizReg);
+		String seller_id = memService.find_id_result(sellerVO);
+		if(seller_id == null) {
+			mav.addObject("check",1);
+			mav.setViewName(viewName);
+		}else {
+		mav.addObject("check",0);
+		mav.addObject("seller_id", seller_id);
+		/* request.removeAttribute("member"); */
+		mav.setViewName(viewName);
+	}
+	return mav;
+	}
+	
+	@Override
+	@RequestMapping(value = "/seller/member/find_pwd_result.do", method = RequestMethod.POST)
+	public ModelAndView find_pwd_result(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		String seller_id = request.getParameter("seller_id");
+		String seller_bizReg = request.getParameter("seller_bizReg");
+		String seller_email = request.getParameter("seller_email");
+		sellerVO.setSeller_id(seller_id);
+		sellerVO.setSeller_bizReg(seller_bizReg);
+		sellerVO.setSeller_email(seller_email);
+		String seller_pw = memService.find_pwd_result(sellerVO);
+		if(seller_pw == null) {
+			mav.addObject("check",1);
+			mav.setViewName(viewName);
+		}else {
+			mav.addObject("check",0);
+			mav.addObject("seller_pw", seller_pw);
+			mav.setViewName(viewName);
+			
+		}
+		
+		return mav;
+	}
+	
+	
 	/*
 	 * @Override
 	 * 

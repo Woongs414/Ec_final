@@ -27,6 +27,13 @@ public interface MemberController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public ModelAndView find_id(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	/* public String emailCheck(HttpServletRequest request) throws Exception ; */
+	public ModelAndView find_pw(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public ModelAndView find_id_result( HttpServletRequest request,HttpServletResponse response) throws Exception ;
+	
+	public ModelAndView find_pwd_result(HttpServletRequest request,HttpServletResponse response) throws Exception;
 	
 }

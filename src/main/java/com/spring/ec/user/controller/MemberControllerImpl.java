@@ -245,7 +245,7 @@ public class MemberControllerImpl implements MemberController {
 		}else {
 		mav.addObject("check",0);
 		mav.addObject("user_id", user_id);
-		request.removeAttribute("member");
+		/* request.removeAttribute("member"); */
 		mav.setViewName(viewName);
 	}
 	return mav;

@@ -68,7 +68,7 @@ request.setCharacterEncoding("utf-8");
 						</tr>
 						<tr>
 							<td>인증번호 입력</td>
-							<td><input type="text" id="mail_check_input_box" oninput="checkauth()" maxlength="6" disabled="disabled" class="prove_ck" ></td>
+							<td><input type="text" id="mail_check_input_box" name="mail_check_input_box" oninput="checkauth()" maxlength="6" disabled="disabled" class="prove_ck" ></td>
 							 
 						</tr>
 					</table>

@@ -30,8 +30,8 @@ request.setCharacterEncoding("utf-8");
 	<!-- Main Footer -->
 	<footer style="margin-left:0px;" class="main-footer">
 		<strong>Copyright &copy; 
-		<img src="${contextPath }/image/logo_7f78.png"
-				 width="55px" height="55px">
+		<a href="${contextPath }/seller/member/loginForm.do"><img src="${contextPath }/image/logo_7f78.png"   
+				 width="55px" height="55px"></a>
 		</strong> All rights reserved.
 	</footer>
 </body>

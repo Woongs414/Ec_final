@@ -23,6 +23,18 @@ public class MemberServiceImpl implements MemberService {
 	public SellerVO login(SellerVO sellerVO) throws DataAccessException {
 		return memberDAO.loginById(sellerVO);
 	}
+	
+	@Override
+	public String find_id_result(SellerVO sellerVO)throws DataAccessException{
+		return memberDAO.find_id_result(sellerVO);
+	}
+	
+	@Override
+	public String find_pwd_result(SellerVO sellerVO)throws DataAccessException{
+		return memberDAO.find_pwd_result(sellerVO);
+	}
+	
+	
 	/*
 	 * @Override public int emailCheck(String seller_email) throws Exception{ return
 	 * memberDAO.emailCheck(seller_email); }

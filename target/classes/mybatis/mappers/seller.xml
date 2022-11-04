@@ -14,6 +14,7 @@
 		<result property="seller_tel" column="seller_tel" />
 		<result property="seller_bizReg" column="seller_bizReg" />
 		<result property="seller_name" column="seller_name" />
+		<result property="s_name" column="s_name"/>
 		<result property="seller_email" column="seller_email" />
 		<result property="seller_addr" column="seller_addr" />
 		<result property="addr_num" column="addr_num" />
@@ -40,8 +41,8 @@
 		</resultMap>
  	<insert id="insertSellerMember" parameterType="java.util.HashMap">
 		<![CDATA[
-		insert into seller_tbl(seller_num,seller_id,seller_pw,seller_tel,seller_bizReg,seller_name,seller_email,bizReg_image_name,area,category_code,addr_num,seller_addr,seller_detailaddr,keyword,reg_date)
-			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_bizReg},#{seller_name},#{seller_email},#{bizReg_image_name},#{area},#{category_code},#{addr_num},#{seller_addr},#{seller_detailaddr},#{keyword},now())		
+		insert into seller_tbl(seller_num,seller_id,seller_pw,seller_tel,seller_bizReg,seller_name,s_name,seller_email,bizReg_image_name,area,category_code,addr_num,seller_addr,seller_detailaddr,keyword,reg_date)
+			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_bizReg},#{seller_name},#{s_name},#{seller_email},#{bizReg_image_name},#{area},#{category_code},#{addr_num},#{seller_addr},#{seller_detailaddr},#{keyword},now())		
 		]]>
 	</insert> 	
 	<!-- 로그인 -->
@@ -76,15 +77,15 @@
 		]]>
 	</select>
 	<!-- 아이디찾기 결과 -->
-	<select id="Seller_find_id_Result" resultType="string" parameterType="sellerVO">
+	<select id="Seller_find_id_result" resultType="String" parameterType="sellerVO">
 		<![CDATA[ 
-			select user_id from user_tbl where user_name = #{user_name} and tel = #{tel} 
+			select seller_id from seller_tbl where s_name = #{s_name} and seller_bizReg = #{seller_bizReg} 
 		]]>
 	</select>
 	<!-- 비밀번호찾기 결과 -->
-	<select id="Seller_find_pwd_Result" resultType="string" parameterType="sellerVO">
+	<select id="Seller_find_pwd_result" resultType="string" parameterType="sellerVO">
 		<![CDATA[ 
-			select user_pwd from user_tbl where user_id = #{user_id} and user_name = #{user_name} and user_email = #{user_email} 
+			select seller_pw from seller_tbl where seller_id = #{seller_id} and seller_bizReg = #{seller_bizReg} and seller_email = #{seller_email} 
 		]]>
 	</select>
 

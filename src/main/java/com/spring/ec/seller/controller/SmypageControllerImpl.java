@@ -181,8 +181,8 @@ public class SmypageControllerImpl implements SmypageController  {
 			//세션 끊어서 다시 로그인하기
 			session.removeAttribute("member");
 			session.removeAttribute("isLogOn");
-			rAttr.addFlashAttribute("result", "pwdchagesuccess");
-			mav.setViewName("redirect:/sellerMain");   //로그인으로 가야됨(임시)
+			rAttr.addFlashAttribute("result", "pwdchangesuccess");
+			mav.setViewName("redirect:/seller/member/loginForm.do");   
  
 		} else { 
 			rAttr.addFlashAttribute("result", "pwdchangefail");

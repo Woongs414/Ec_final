@@ -27,6 +27,19 @@ public class MemberDAOImpl implements MemberDAO {
 			return vo;
 		}
 		
+		@Override
+		public String find_id_result(SellerVO sellerVO)throws DataAccessException{
+			String vo = sqlSession.selectOne("mapper.seller.Seller_find_id_result", sellerVO);
+			return vo;
+		}
+		
+		@Override
+		public String find_pwd_result(SellerVO sellerVO)throws DataAccessException{
+			String vo = sqlSession.selectOne("mapper.seller.Seller_find_pwd_result", sellerVO);
+			return vo;
+		}
+		
+		
 		/*
 		 * @Override public int emailCheck(String seller_email) throws Exception{ return
 		 * sqlSession.selectOne("mapper.seller.emailCheck", seller_email); }
