@@ -92,13 +92,13 @@
 	
 	<select id="selectNewList_num" resultType="int">
 		<![CDATA[
-			select max(list_num)+1 from u_board_tbl 			
+			select IFNULL(MAX(list_num)+1,1) from u_board_tbl 			
 		 ]]>
 	</select>
 	
 	<select id="selectNewComment_num" resultType="int">
 		<![CDATA[
-			select max(comment_num)+1 from u_comments_tbl 			
+			select IFNULL(MAX(comment_num)+1,1) from u_comments_tbl 			
 		 ]]>
 	</select>
 

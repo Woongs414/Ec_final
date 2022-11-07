@@ -72,7 +72,8 @@ String viewName = (String)request.getAttribute("viewName");
 </style>
 <script>
 	function fn_boardForm(isLogOn, boardForm, loginForm) {
-		if (isLogOn != '' && isLogOn != 'false') {
+		//로그인시
+		if (isLogOn != '' && isLogOn != 'false') { 
 			location.href = boardForm;
 		} else {
 			$('#writeBoard').attr("disabled", true);
@@ -190,7 +191,20 @@ String viewName = (String)request.getAttribute("viewName");
     		</c:if>
   			</ul>
 		</nav>
+		<c:choose> 
+		<c:when test="${kakaoLogin == true }">
+		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${kakaoLogin}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
+		</c:when>
+		<c:when test="${isLogOn == true }">
+		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${kakaoLogin}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
+		</c:when>
+		<c:otherwise>	
 		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${isLogOn}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
+		</c:otherwise>	
+		</c:choose> 		
+	
+	 
+
 	</section>
 </body>
 </html>

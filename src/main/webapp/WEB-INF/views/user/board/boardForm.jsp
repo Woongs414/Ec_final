@@ -53,6 +53,8 @@ request.setCharacterEncoding("utf-8");
 			}
 			reader.readAsDataURL(input.files[0]);
 			document.getElementById("preview").style.display="block";
+		}else{
+			document.getElementById("preview").style.display="none";
 		}
 	}
 	function backToList(obj){

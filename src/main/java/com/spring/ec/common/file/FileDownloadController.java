@@ -22,6 +22,7 @@ public class FileDownloadController {
 	private static final String STORE_IMAGE_REPO="C:\\EATSEE\\store";
 	
 	@RequestMapping("/u_board/download")
+	//게시글에 등록된 글읽을때 파일첨부한 이미지를 다운로드한다.
 	public void userdownload(@RequestParam("image_fileName") String image_fileName, @RequestParam("list_num") String list_num, HttpServletResponse response)
 			throws Exception {
 		OutputStream out = response.getOutputStream();

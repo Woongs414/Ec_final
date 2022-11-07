@@ -236,7 +236,7 @@ color:black;
 		<td colspan="3"><input type="text" id="wide" name="book_num" size="20" placeholder="예약번호"><br><br></td>
 		</tr>      
         <tr height="2">
-        <td colspan="3"> <input type="password" id="wide" name="book_name" size="20" placeholder="예약자명"><br></td>
+        <td colspan="3"> <input type="password" id="wide" name="user_name" size="20" placeholder="예약자명"><br></td>
         </tr>
         
 

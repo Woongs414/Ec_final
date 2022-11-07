@@ -296,7 +296,7 @@ img {
 							data-bs-dismiss="offcanvas" aria-label="Close"></button>
 					</c:if>
 					<!-- 비로그인시 -->
-					<c:if test="${member == null}">
+					<c:if test="${member == null }">
 						<h4 class="offcanvas-title" id="offcanvasNavbarLabel">
 							로그인이 필요합니다<br>
 						</h4>
@@ -347,7 +347,7 @@ img {
 								class="nav-link nav-hover"> <span class="bi pe-none me-2"
 									width="16" height="16">❤</span> 찜
 							</a></li>
-							<li><a href="#" class="nav-link nav-hover"> <span
+							<li><a href="${contextPath}/mypage/uBook.do" class="nav-link nav-hover"> <span
 									class="bi pe-none me-2" width="16" height="16">📅</span> 예약조회
 							</a></li>
 						</c:if>
@@ -379,7 +379,7 @@ img {
 								class="nav-link nav-hover"> <span class="bi pe-none me-2"
 									width="16" height="16">📣</span> Event
 							</a></li>
-							<li><a href="#" class="nav-link nav-hover"> <span
+							<li><a href="${contextPath }/user/loginForm.do" class="nav-link nav-hover"> <span
 									class="bi pe-none me-2" width="16" height="16">📅</span> 예약조회
 							</a></li>
 						</c:if>
@@ -416,7 +416,7 @@ img {
 								class="nav-link nav-hover"> <span class="bi pe-none me-2"
 									width="16" height="16">❤</span> 찜
 							</a></li>
-							<li><a href="#" class="nav-link nav-hover"> <span
+							<li><a href="${contextPath}/mypage/uBook.do" class="nav-link nav-hover"> <span
 									class="bi pe-none me-2" width="16" height="16">📅</span> 예약조회
 							</a></li>
 

@@ -302,7 +302,7 @@ public class BoardControllerImpl implements BoardController {
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
 			}
 			message = "<script>";
-			message += " alert('»õ±ÛÀ» Ãß°¡Çß½À´Ï´Ù.');";
+			message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -311,7 +311,7 @@ public class BoardControllerImpl implements BoardController {
 			srcFile.delete();
 
 			message = "<script>";
-			message += " alert('¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
+			message += " alert('ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -359,7 +359,7 @@ public class BoardControllerImpl implements BoardController {
 		}
 		return image_fileName;
 	}
-	//°Ô½Ã±Û »èÁ¦
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	@RequestMapping(value = "/user/removeBoard", method = RequestMethod.POST )
 	public ModelAndView removeBoard(@RequestParam("list_num") int list_num, HttpServletRequest request,
@@ -369,7 +369,7 @@ public class BoardControllerImpl implements BoardController {
 		mav.setViewName("redirect:/user/u_board");
 		return mav;
 	}
-	//°Ô½Ã±Û ¼öÁ¤ÆäÀÌÁö ÀÌµ¿
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	@Override
 	@RequestMapping(value = "/user/modBoard", method = {RequestMethod.POST,RequestMethod.GET })
 	public ModelAndView modBoardForm(@RequestParam("list_num") int list_num, HttpServletRequest request,
@@ -381,7 +381,7 @@ public class BoardControllerImpl implements BoardController {
 		mav.addObject("board", board);
 		return mav;
 	}
-	//°Ô½Ã±Û ¼öÁ¤ ¿Ï·á
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
 	@Override
 	@RequestMapping(value = "/board/modBoardCompl", method = RequestMethod.POST)
 	@ResponseBody
@@ -415,7 +415,7 @@ public class BoardControllerImpl implements BoardController {
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
 			}
 			message = "<script>";
-			message += " alert('¼öÁ¤ ¿Ï·áÇß½À´Ï´Ù.');";
+			message += " alert('ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board/u_boardView?list_num=" + list_num+ "';";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -424,7 +424,7 @@ public class BoardControllerImpl implements BoardController {
 			srcFile.delete();
 
 			message = "<script>";
-			message += " alert('¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
+			message += " alert('ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);

@@ -53,6 +53,8 @@ request.setCharacterEncoding("utf-8");
 			}
 			reader.readAsDataURL(input.files[0]);
 			document.getElementById("preview").style.display="block";
+		}else{
+			document.getElementById("preview").style.display="none";
 		}
 	}
 	function backToList(obj){
@@ -98,6 +100,7 @@ request.setCharacterEncoding("utf-8");
 				<td align="right">이미지파일:</td>
 				<td>
 				<input type="file" name="image_fileName" onchange="readURL(this);"/>
+				
 				</td>
 			</tr>
 			<tr>

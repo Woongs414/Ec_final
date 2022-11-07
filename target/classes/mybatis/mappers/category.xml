@@ -242,19 +242,19 @@
 	</select>
 	<insert id="insertUserBooking" parameterType="java.util.Map">
 	<![CDATA[
-			insert into book_tbl (book_num,seller_id,user_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id)
-			values(#{book_num},#{seller_id},#{user_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id})
+			insert into book_tbl (book_num,seller_id,user_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id,reserv_status)
+			values((SELECT IFNULL(MAX(book_num)+1,1) FROM book_tbl aa),#{seller_id},#{user_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id},1)
 		]]>
 	</insert>
 	<select id="selectNewUserBook_num" resultType="int">
 		<![CDATA[
-			select max(book_num)+1 from book_tbl 			
+			select IFNULL(MAX(book_num)+1,1) from book_tbl 			
 		 ]]>
 	</select>
 	<insert id="insertNoUserBooking" parameterType="java.util.Map">
 	<![CDATA[
-			insert into nouser_book_tbl (book_num,seller_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id)
-			values(#{book_num},#{seller_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id})
+			insert into nouser_book_tbl (book_num,seller_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id,reserv_status)
+			values(#{book_num},#{seller_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id},1)
 		]]>
 	</insert>
 	<select id="selectNewNoUserBook_num" resultType="int">
