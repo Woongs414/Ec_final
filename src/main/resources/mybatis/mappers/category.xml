@@ -185,8 +185,8 @@
 	<!--찜  insert  -->
 	<insert id="addwish" parameterType="java.util.HashMap" >
 		<![CDATA[
-		insert into wish_tbl(wish_num,category_code,user_id,seller_id)
-			values((SELECT IFNULL(MAX(wish_num)+1,1) FROM wish_tbl b), 10, #{user_id}, #{seller_id})
+		insert into wish_tbl(wish_num,category_code,user_id,seller_id,reg_date)
+			values((SELECT IFNULL(MAX(wish_num)+1,1) FROM wish_tbl b), #{category_code}, #{user_id}, #{seller_id},now())
 		]]>
 	</insert>
 	

@@ -72,7 +72,7 @@ public class SmypageControllerImpl implements SmypageController  {
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
 		String seller_id = sellerVO.getSeller_id();
 		
-		//String seller_id = "stest001";
+		
 		listMap.put("seller_id", seller_id);
 		listMap.put("seller_pw", seller_pw);
 		
@@ -109,7 +109,6 @@ public class SmypageControllerImpl implements SmypageController  {
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
 		String seller_id = sellerVO.getSeller_id();
 		
-		//String seller_id = "stest001";
 		
 		//해당 가게의 찜,리뷰,예약 조회
 		StoreinfosumVO infosum = infoService.selectinfosum(seller_id);
@@ -118,22 +117,21 @@ public class SmypageControllerImpl implements SmypageController  {
 		
 		
 		//가게 소개가 등록되어있는지 확인
-		Integer storeinfonum = sellerdetail.getStoreInfo_num();
+		//Integer storeinfonum = sellerdetail.getStoreInfo_num();
 		int infostatus;
 	
 		
 		List<String> keyword = Arrays.asList(seller.getKeyword().split(","));
 		
-		if(storeinfonum == null) {
+		if(sellerdetail == null) {
 			infostatus = 0;
-			
-			sellerdetail.setImage_fileName("no_store_img.png");
-			sellerdetail.setStore_introduce("가게 소개를 등록해주세요.");
-			sellerdetail.setOpenTime("영업 시간을 등록해주세요.");
-			sellerdetail.setCloseDay("휴무일을 등록해주세요.");
-			sellerdetail.setStore_nic("상호명을 등록해주세요.");
-			sellerdetail.setStore_benefit("편의 시설을 등록해주세요.");
-
+			/*
+			 * seller.setImage_fileName("no_store_img.png");
+			 * seller.setStore_introduce("가게 소개를 등록해주세요.");
+			 * seller.setOpenTime("영업 시간을 등록해주세요."); seller.setCloseDay("휴무일을 등록해주세요.");
+			 * seller.setStore_nic("상호명을 등록해주세요.");
+			 * seller.setStore_benefit("편의 시설을 등록해주세요.");
+			 */
 		} else {
 			infostatus = 1;
 		}
@@ -179,10 +177,10 @@ public class SmypageControllerImpl implements SmypageController  {
 		
 		if(result == 1) { 
 			//세션 끊어서 다시 로그인하기
-			session.removeAttribute("member");
+			session.removeAttribute("sellerMember");
 			session.removeAttribute("isLogOn");
-			rAttr.addFlashAttribute("result", "pwdchangesuccess");
-			mav.setViewName("redirect:/seller/member/loginForm.do");   
+			rAttr.addFlashAttribute("result", "pwdchagesuccess");
+			mav.setViewName("redirect:/seller/member/loginForm.do");
  
 		} else { 
 			rAttr.addFlashAttribute("result", "pwdchangefail");
@@ -204,7 +202,7 @@ public class SmypageControllerImpl implements SmypageController  {
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
 		String seller_id = sellerVO.getSeller_id();
 		
-		modseller.setSeller_id("stest001");
+		modseller.setSeller_id(seller_id);
 		modseller.setKeyword(key01 + ", " + key02 + ", " + key03);
 		int result = smypageService.modseller(modseller);
 		
@@ -221,6 +219,76 @@ public class SmypageControllerImpl implements SmypageController  {
 		return mav; 
 	}
 	
+	
+	
+	
+	
+	
+	// add addinfo 소개등록
+			@Override
+			@RequestMapping(value = "/addinfo.do", method = RequestMethod.POST)
+			@ResponseBody
+			public ResponseEntity addinfo(@ModelAttribute("sellerinfo") StoreinfosumVO addinfo,MultipartHttpServletRequest multipartRequest, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {		
+				response.setContentType("text/html; charset=UTF-8");
+				multipartRequest.setCharacterEncoding("utf-8");
+				Map<String, Object> addinfoMap = new HashMap<String, Object>();
+				Enumeration enu = multipartRequest.getParameterNames();
+				while (enu.hasMoreElements()) {
+					String name = (String) enu.nextElement();
+					String value = multipartRequest.getParameter(name);
+					addinfoMap.put(name, value);
+				}
+				
+
+				String imageFileName = upload(multipartRequest);
+				HttpSession session = multipartRequest.getSession();
+				
+				//session에 남아있는 sellerid를 가져와야함
+				SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+				String seller_id = sellerVO.getSeller_id();
+				
+				addinfoMap.put("seller_id",seller_id);
+				addinfoMap.put("image_fileName", imageFileName);
+				
+				
+				String message;
+				ResponseEntity resEnt = null;
+				HttpHeaders responseHeaders = new HttpHeaders();
+				responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+				try {
+					smypageService.addinfo(addinfoMap);
+					
+					if(imageFileName != null && imageFileName.length() != 0) {
+						File srcFile = new File(STORE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+						File destDir = new File(STORE_IMAGE_REPO + "\\" + addinfoMap.get("seller_id"));
+						FileUtils.moveFileToDirectory(srcFile, destDir, true);
+						
+						/*
+						 * String originalFileName = (String) menuMap.get("originalFileName"); File
+						 * oldFile = new File(STORE_IMAGE_REPO + "\\" + modinfo.getSeller_id()) + "\\" +
+						 * originalFileName); oldFile.delete();
+						 */
+					}
+					
+					message = "<script>";
+					message += " alert('업체 소개를 등록하였습니다.');";
+					 
+					message += " location.href='" + multipartRequest.getContextPath() +"/smypage.do'";
+					message += " </script>";
+					resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+				} catch (Exception e) {
+					File srcFile = new File(STORE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+					srcFile.delete();
+
+					message = "<script>";
+					message += " alert('오류가 발생했습니다. 다시 시도해 주세요');";
+					message += " location.href='" + multipartRequest.getContextPath() + "/error.do'; ";
+					message += " </script>";
+					resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+					e.printStackTrace();
+				}
+				return resEnt;
+			}
 	
 	
 	// mod modinfo 소개수정
@@ -246,7 +314,7 @@ public class SmypageControllerImpl implements SmypageController  {
 			SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
 			String seller_id = sellerVO.getSeller_id();
 			
-			modinfoMap.put("seller_id","stest001");
+			modinfoMap.put("seller_id",seller_id);
 			modinfoMap.put("image_fileName", imageFileName);
 			
 			
@@ -271,12 +339,6 @@ public class SmypageControllerImpl implements SmypageController  {
 				
 				message = "<script>";
 				message += " alert('업체 소개를 수정하였습니다.');";
-				
-				/*
-				 * message += " location.href='" + multipartRequest.getContextPath() +
-				 * "/menudetail.do?pro_num=" + menu.getPro_num() + "'; ";
-				 */
-				 
 				message += " location.href='" + multipartRequest.getContextPath() +"/smypage.do'";
 				message += " </script>";
 				resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);

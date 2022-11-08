@@ -2687,7 +2687,7 @@ function like(review_num,likenumid) {
 
 
 /*찜 추가/삭제  */
-function wishstate(seller_id, imgid,wishid) {
+function wishstate(seller_id, imgid,wishid,category_code) {
 	var user_id = "${member.user_id}";
 	var seller_id = seller_id;
 	var status = $( imgid ).attr( 'status' );
@@ -2703,7 +2703,8 @@ function wishstate(seller_id, imgid,wishid) {
 				dataType:"text",
 				data : {
 					user_id : user_id,
-					seller_id : seller_id
+					seller_id : seller_id,
+					category_code:category_code
 					
 				},
 			    success: function (data) {
@@ -3238,7 +3239,7 @@ geocoder.addressSearch(addr,function(result, status){
 									</span>
 									
 									<span class="yxkiA">
-										<a href="#" target="_self" role="button" class="D_Xqt" aria-pressed="false"  onclick="wishstate('${store.seller_id }', wish${storeNum.index}, wishsum${storeNum.index });">
+										<a href="#" target="_self" role="button" class="D_Xqt" aria-pressed="false"  onclick="wishstate('${store.seller_id }', wish${storeNum.index}, wishsum${storeNum.index },${store.category_code });">
 										<img alt="nowish" src="image/nowish.png" width="20" height="20" status="false" id="wish${storeNum.index}">
 										찜하기
 										<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="Mq0QC" aria-hidden="true">

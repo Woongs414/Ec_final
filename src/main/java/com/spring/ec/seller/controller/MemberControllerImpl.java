@@ -35,7 +35,7 @@ public class MemberControllerImpl implements MemberController {
 	private MemberService memService;
 	@Autowired
 	SellerVO sellerVO;
-	// �뙋留ㅼ옄 硫붿씤
+	// 로그인 화면 이동
 
 	@Override
 	@RequestMapping(value = "/seller/member/loginForm.do", method = RequestMethod.GET)

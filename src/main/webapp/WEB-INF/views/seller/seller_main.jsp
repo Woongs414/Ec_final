@@ -243,7 +243,7 @@ String viewName = (String)request.getAttribute("viewName");
 							<div class="icon">
 								<i class="ion ion-android-contact"></i>
 							</div>
-							<a href="#" class="small-box-footer">확인&nbsp;<i
+							<a href="${contextPath}/seller/reviewManage" class="small-box-footer">확인&nbsp;<i
 								class="fas fa-arrow-circle-right"></i></a>
 						</div>
 					</div>

@@ -22,4 +22,5 @@ public interface SmypageController {
 	public ModelAndView changepwd(@RequestParam("seller_pw") String seller_pw,RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView modseller(@ModelAttribute("seller") SellerVO modseller, @RequestParam("key01") String key01,@RequestParam("key02") String key02,@RequestParam("key03") String key03, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ResponseEntity modinfo(@ModelAttribute("sellerinfo") StoreinfosumVO modinfo,MultipartHttpServletRequest multipartRequest, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ResponseEntity addinfo(@ModelAttribute("sellerinfo") StoreinfosumVO addinfo,MultipartHttpServletRequest multipartRequest, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

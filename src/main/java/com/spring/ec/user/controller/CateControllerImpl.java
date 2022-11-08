@@ -175,13 +175,16 @@ public class CateControllerImpl implements CateController {
 	// ���ϱ�
 	@Override
 	@RequestMapping(value = "/addwish.do", method = RequestMethod.POST)
-	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id,
+	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id,@RequestParam(value = "category_code") String category_code,
 			@RequestParam(value = "user_id") String user_id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		HttpSession session = request.getSession();
 		Map<String, String> listMap = new HashMap<String, String>();
 		listMap.put("seller_id", seller_id);
 		listMap.put("user_id", user_id);
+		listMap.put("category_code", category_code);
+		
+		 
 		int result = cateService.addwish(listMap);
 		// �򰳼� ��������
 		String wishsellsum = cateService.selectsellerwishsum(seller_id);

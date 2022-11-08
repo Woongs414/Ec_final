@@ -60,6 +60,25 @@ public class SmypageDAOImpl implements SmypageDAO {
 	}
 	
 	
+	//addinfo
+	@Override
+	public int addinfo(Map<String, Object> addinfoMap) throws Exception {
+		int info = sqlSession.update("mapper.seller.mypage.addinfo",addinfoMap);
+		return info;
+	}
+	
+	//mod info
+	@Override
+	public int modstorenic(SellerVO modinfo) throws Exception {
+		int info = sqlSession.update("mapper.seller.mypage.modstorenic",modinfo);
+		return info;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -105,13 +105,13 @@ public class ReviewAnsControllerImpl implements ReviewAnsController {
 		try {
 			int list_num = reAnsService.addNewAnswer(answer);
 			message = "<script>";
-			message += " alert('´ä±ÛÀ» Ãß°¡Çß½À´Ï´Ù.');";
+			message += " alert('ëŒ“ê¸€ì´ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.');";
 			message += " location.href='" + request.getContextPath() + "/seller/reviewManage'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		} catch (Exception e) {
 			message = "<script>";
-			message += " alert('¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
+			message += " alert('ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.');";
 			message += " location.href='" + request.getContextPath() + "/seller/reviewManage'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -140,13 +140,13 @@ public class ReviewAnsControllerImpl implements ReviewAnsController {
 		try {
 			int list_num = reAnsService.removeAnswer(answer);
 			message = "<script>";
-			message += " alert('´ä±ÛÀ» »èÁ¦Çß½À´Ï´Ù.');";
+			message += " alert('ëŒ“ê¸€ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.');";
 			message += " location.href='" + request.getContextPath() + "/seller/reviewManage'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		} catch (Exception e) {
 			message = "<script>";
-			message += " alert('¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
+			message += " alert('ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.');";
 			message += " location.href='" + request.getContextPath() + "/seller/reviewManage'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);

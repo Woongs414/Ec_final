@@ -41,6 +41,7 @@ public class SmypageServiceImpl implements SmypageService {
 	//mod seller
 	@Override
 	public int modseller(SellerVO modinfo) throws Exception {
+		smypageDAO.modstorenic(modinfo);
 		return smypageDAO.modseller(modinfo);
 	}
 	
@@ -49,6 +50,16 @@ public class SmypageServiceImpl implements SmypageService {
 	public int modinfo(Map<String, Object> modinfoMap) throws Exception {
 		return smypageDAO.modinfo(modinfoMap);
 	}
+	
+	
+	//add info
+	@Override
+	public int addinfo(Map<String, Object> addinfoMap) throws Exception {
+		return smypageDAO.addinfo(addinfoMap);
+	}
+	
+	
+	
 	
 	
 	

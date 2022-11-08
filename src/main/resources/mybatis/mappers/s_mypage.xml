@@ -15,6 +15,7 @@
 		<result property="seller_name" column="seller_name" />
 		<result property="seller_email" column="seller_email" />
 		<result property="seller_addr" column="seller_addr" />
+		<result property="seller_detailaddr" column="seller_detailaddr" />
 		<result property="bizReg_image_name" column="bizReg_image_name" />
 		<result property="area" column="area" />
 		<result property="keyword" column="keyword" />
@@ -86,7 +87,8 @@
 	
 	<update id="modseller" parameterType="SellerVO">
 		<![CDATA[ 
-		update seller_tbl set seller_tel = #{seller_tel}, seller_name = #{seller_name}, seller_email = #{seller_email}, area = #{area}, keyword=#{keyword}, mod_date=now() where seller_id = #{seller_id}
+		update seller_tbl set seller_tel = #{seller_tel}, seller_name = #{seller_name}, seller_email = #{seller_email}, area = #{area}, seller_addr= #{seller_addr}, addr_num = #{addr_num}, seller_detailaddr = #{seller_detailaddr},addr_num = #{addr_num}, keyword=#{keyword}, mod_date=now() where seller_id = #{seller_id}
+		
 		 ]]>
 	</update>
 	
@@ -96,7 +98,17 @@
 		 ]]>
 	</update>
 	
+	<insert id="addinfo" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		insert into storeinfo_tbl(storeInfo_num,seller_id,image_fileName,store_introduce,openTime,closeDay,store_nic,store_benefit,reg_date,open_time,close_time,min_people,max_people,reserv_pay) values((select IFNULL(max(storeInfo_num)+1,1) from storeinfo_tbl a),#{seller_id},#{image_fileName}, #{store_introduce}, #{openTime}, #{closeDay},(select seller_name from seller_tbl b where seller_id=#{seller_id}) , #{store_benefit}, now(), #{open_time}, #{close_time}, #{min_People}, #{max_People}, #{reserv_pay} )
+		 ]]>
+	</insert>
 	
+	<update id="modstorenic" parameterType="SellerVO">
+		<![CDATA[ 
+		UPDATE storeinfo_tbl SET store_nic=#{seller_name} where seller_id = #{seller_id}
+		 ]]>
+	</update>
 	
 
 

@@ -14,4 +14,5 @@ public interface SmypageService {
 	public StoreinfosumVO sellerdetail(String seller_id) throws Exception;
 	public int modseller(SellerVO modinfo) throws Exception;
 	public int modinfo(Map<String, Object> modinfoMap) throws Exception;
+	public int addinfo(Map<String, Object> addinfoMap) throws Exception;
 }
