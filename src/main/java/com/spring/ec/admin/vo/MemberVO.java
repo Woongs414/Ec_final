@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component("adminMeberVO")
+@Component("adminMemberVO")
 public class MemberVO {
 	private int admin_num;
 	private String admin_id;
@@ -15,12 +15,13 @@ public class MemberVO {
 	private int level;
 	private Date reg_date;
 	private Date mod_date;
+	private int rownum;
 	
 	public MemberVO() {
 		
 	}
 	
-	public MemberVO(int admin_num, String admin_id, String admin_pw, String admin_name, String admin_tel, String admin_email, int level, Date reg_date, Date mod_date) {
+	public MemberVO(int admin_num, String admin_id, String admin_pw, String admin_name, String admin_tel, String admin_email, int level, Date reg_date, Date mod_date, int rownum) {
 		this.admin_num = admin_num;
 		this.admin_id = admin_id;
 		this.admin_pw = admin_pw;
@@ -30,6 +31,7 @@ public class MemberVO {
 		this.level = level;
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
+		this.rownum = rownum;
 	}
 	
 	public int getAdmin_num() {
@@ -103,5 +105,15 @@ public class MemberVO {
 	public void setMod_date(Date mod_date) {
 		this.mod_date = mod_date;
 	}
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+	
+	
 	
 }
