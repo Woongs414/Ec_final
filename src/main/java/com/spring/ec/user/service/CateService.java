@@ -1,10 +1,11 @@
-package com.spring.ec.user.service;
+	package com.spring.ec.user.service;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
+import com.spring.ec.common.visit.VisitVO;
 import com.spring.ec.seller.vo.ProductVO;
 import com.spring.ec.seller.vo.SellerVO;
 import com.spring.ec.seller.vo.StoreVO;
@@ -50,4 +51,6 @@ public interface CateService {
 	public int addBooking(Map booking) throws Exception;
 	
 	public int addNoUserBooking(Map booking) throws Exception;
+	
+	public int visitor(VisitVO vo)throws Exception;
 }

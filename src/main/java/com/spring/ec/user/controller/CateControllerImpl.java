@@ -1,7 +1,6 @@
 package com.spring.ec.user.controller;
 
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ec.common.visit.VisitVO;
 import com.spring.ec.seller.vo.StoreVO;
 import com.spring.ec.user.service.CateService;
 import com.spring.ec.user.vo.MemberVO;
@@ -73,6 +72,12 @@ public class CateControllerImpl implements CateController {
 		mav.addObject("wishList", wishList);
 		mav.addObject("wishsum", wishsum);
 		mav.addObject("prosumList", prosumList);
+		
+		VisitVO vo = new VisitVO();
+		vo.setVisit_ip(request.getRemoteAddr());
+		vo.setVisit_kind("user");
+		int visit_success = cateService.visitor(vo);
+		
 		return mav;
 	}
 

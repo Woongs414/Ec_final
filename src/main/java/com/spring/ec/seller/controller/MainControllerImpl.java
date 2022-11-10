@@ -1,6 +1,5 @@
 package com.spring.ec.seller.controller;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ec.common.visit.VisitVO;
 import com.spring.ec.seller.service.BookingService;
+import com.spring.ec.seller.service.MainService;
 import com.spring.ec.seller.service.NoticeService;
 import com.spring.ec.seller.service.ReviewAnsService;
 import com.spring.ec.seller.service.WishService;
@@ -37,11 +38,13 @@ public class MainControllerImpl implements MainController  {
 	@Autowired
 	private WishService wishService;
 	@Autowired
+	private MainService mainService;
+	@Autowired
 	BookingVO bookingVO;
 	@Autowired
 	SellerVO sellerVO;
 	
-	/* ¸ÞÀÎÆäÀÌÁö */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	@Override
 	@RequestMapping(value = "/sellerMain", method = RequestMethod.GET)
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -100,10 +103,16 @@ public class MainControllerImpl implements MainController  {
 		mav.addObject("todayWish", todayWish);
 		mav.addObject("monthWish", monthWish);
 		mav.setViewName(viewName);
+		
+		VisitVO vo = new VisitVO();
+		vo.setVisit_ip(request.getRemoteAddr());
+		vo.setVisit_kind("seller");
+		mainService.visitor(vo);
+		
 		return mav; 
 	}
 	
-	//¿ù ±×·¡ÇÁ °è»ê
+	//ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	private Map monthsList(List<GraphVO> monthsList) throws Exception{
 		Map monthBook = new HashMap();
 		for (GraphVO graph : monthsList) {

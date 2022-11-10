@@ -2,13 +2,29 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Configuration 2.0//EN" 
 "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
-	<definition name="/admin/login"
-		template="/WEB-INF/views/admin/common/layout.jsp">
-		<put-attribute name="title" value="어드민 로그인" />
-		<put-attribute name="header" value="" />
-		<put-attribute name="side" value="" />
-		<put-attribute name="body" value="/WEB-INF/views/admin/member/login.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/admin/common/footer.jsp" />
+	<definition name="adminLayout" template="/WEB-INF/views/admin/common/main_layout.jsp">
+		<put-attribute name="title" value=""/>
+		<put-attribute name="header" value="/WEB-INF/views/admin/common/header.jsp"/>
+		<put-attribute name="side" value="/WEB-INF/views/admin/common/left_side.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/admin/common/footer.jsp"/>
 	</definition>
-
+	<!-- 메인페이지 -->
+	<definition name="/admin/main" extends="adminLayout">
+		<put-attribute name="title" value="먹고보자 :: 셀러들의 메인"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/admin_main.jsp"/>
+	</definition>
+	
+	<!-- 관리자 로그인 페이지 -->
+	<definition name="/admin/loginForm" template ="/WEB-INF/views/admin/member/login_main_layout.jsp">
+		<put-attribute name="title" value="먹고보자 :: 관리자 로그인"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/member/login.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/admin/member/footer.jsp"/>
+	</definition>
+	
+	<!-- 관리자 리스트 페이지 -->
+	<definition name="/admin/adminlist" extends="adminLayout">
+		<put-attribute name="title" value="먹고보자 :: 관리자 리스트"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/adminmag/admin_list.jsp"/>
+	</definition>
 </tiles-definitions>

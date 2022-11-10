@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.adGraph">	
+	<resultMap type="graphVO" id="adGraphResult">
+		<result property="months" column="months" />
+		<result property="count" column="count" />
+	</resultMap>
+	<!-- 사용자 그래프 -->
+	<!-- 월별 방문자수 -->
+	<select id="selectMonthlyVisitor" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.visit_time, '%m') months, count(*) count
+			FROM visitor_tbl AS b where b.visit_kind = 'user'
+			group by DATE_FORMAT(b.visit_time, '%m')
+		]]>
+	</select>
+	<!-- 월별 예약수 -->
+	<select id="selectMonthlyReserv" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(a.reserv_date, '%m') months, count(*) count
+			FROM (SELECT b.reserv_date FROM book_tbl AS b 
+			LEFT OUTER JOIN
+			nouser_book_tbl AS c ON b.reserv_date = c.reserv_date) AS a
+			group by DATE_FORMAT(a.reserv_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 리뷰수 -->
+	<select id="selectMonthlyReview" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM review_tbl AS b
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 회원가입수 -->
+	<select id="selectMonthlySignUp" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM review_tbl AS b
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- /사용자 그래프 -->
+	
+	<!-- 판매자 그래프 -->
+	<!-- 월별 사용자 글수 -->
+	<select id="selectMonthlySellerVisitor" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.visit_time, '%m') months, count(*) count
+			FROM visitor_tbl AS b where b.visit_kind = 'seller'
+			group by DATE_FORMAT(b.visit_time, '%m')
+		]]>
+	</select>
+	<!-- 월별 블랙리스트 수 -->
+	<select id="selectMonthlyBlackList" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM custmanage_tbl AS b where b.cust_kind = 'black' and b.process = '승인'
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 화이트리스트 수 -->
+	<select id="selectMonthlyWhiteList" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM custmanage_tbl AS b where b.cust_kind = 'white' and b.process = '승인'
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 판매자 회원가입수 -->
+	<select id="selectMonthlySellerSignUp" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM seller_tbl AS b
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- /판매자 그래프 -->
+	
+	<!-- 판매자 그래프 -->
+	<!-- 월별 사용자 글수 -->
+	<select id="selectMonthlyUserBoard" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM u_board_tbl AS b
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 판매자 글수 -->
+	<select id="selectMonthlySellerBoard" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM s_board_tbl AS b
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 사용자 댓글수 -->
+	<select id="selectMonthlyUserComment" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM u_comments_tbl AS b 
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- 월별 판매자 댓글수수 -->
+	<select id="selectMonthlySellerComment" resultMap="adGraphResult">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM s_comments_tbl AS b
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
+	<!-- /판매자 그래프 -->
+</mapper>

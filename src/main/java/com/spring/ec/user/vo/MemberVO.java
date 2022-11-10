@@ -17,13 +17,15 @@ public class MemberVO {
 	private String birth_mm;
 	private String birth_dd;
 	private char gender;
+	private String reg_date;
+    private String mod_date;
 
 
 	public MemberVO() {
 
 	}
 
-public MemberVO(int user_no, String user_id, String user_nick, String user_pwd, String pwd_ck, String tel, String user_name, String user_email, String birth_yy, String birth_mm, String birth_dd, char gender) {
+public MemberVO(int user_no, String user_id, String user_nick, String user_pwd, String pwd_ck, String tel, String user_name, String user_email, String birth_yy, String birth_mm, String birth_dd, char gender,String reg_date, String mod_date) {
 		
 		this.user_no = user_no;
 		this.user_id = user_id;
@@ -37,6 +39,8 @@ public MemberVO(int user_no, String user_id, String user_nick, String user_pwd, 
 		this.birth_mm = birth_mm;
 		this.birth_dd = birth_dd;
 		this.gender = gender;
+		this.reg_date = reg_date;
+		this.mod_date = mod_date;
 	}
 
 	public int getUser_no() {
@@ -133,6 +137,22 @@ public MemberVO(int user_no, String user_id, String user_nick, String user_pwd, 
 
 	public void setUser_nick(String user_nick) {
 		this.user_nick = user_nick;
+	}
+
+	public String getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+
+	public String getMod_date() {
+		return mod_date;
+	}
+
+	public void setMod_date(String mod_date) {
+		this.mod_date = mod_date;
 	}
 
 

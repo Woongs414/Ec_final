@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.visit">	
+	<resultMap type="visitVO" id="visitResult">
+		<result property="visit_num" column="visit_num" />
+		<result property="visit_kind" column="visit_kind" />
+		<result property="visit_ip" column="visit_ip" />
+		<result property="visit_time" column="visit_time" />
+	</resultMap>
+	<!-- 월별 예약 건수 -->
+	<insert id="insertVisitor" parameterType="visitVO">
+		<![CDATA[
+			INSERT INTO visitor_tbl(visit_num,visit_kind,visit_ip,visit_time)
+			SELECT (SELECT IFNULL(MAX(visit_num)+1,1) FROM visitor_tbl),#{visit_kind},#{visit_ip},NOW()
+			FROM DUAL
+			WHERE NOT EXISTS 
+			(SELECT visit_ip,visit_kind,visit_time FROM visitor_tbl WHERE visit_ip = #{visit_ip} and
+			visit_kind = #{visit_kind} 
+			and DATE_FORMAT(visit_time,'%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d'))
+		]]>
+	</insert>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member.xml의 네임 스페이스 지정 -->
+<mapper namespace="mapper.admin.member">
+	<resultMap type="adminmemberVO" id="adminmemResult">
+		<result property="admin_num" column="admin_num" />
+		<result property="admin_id" column="admin_id" />
+		<result property="admin_pw" column="admin_pw" />
+		<result property="admin_name" column="admin_name" />
+		<result property="admin_tel" column="admin_tel" />
+		<result property="admin_email" column="admin_email" />
+		<result property="level" column="level" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+		<result property="rownum" column="rownum" />
+
+	</resultMap>
+
+	
+	
+	
+	<select id="selectadminlist" resultMap="adminmemResult" parameterType="int">
+		<![CDATA[ 
+		SELECT * FROM (SELECT *,  @rownum := @rownum +1 AS rownum from admin_tbl, (SELECT @rownum :=0) AS r ORDER BY rownum LIMIT #{page},10 ) AS a ORDER BY reg_date DESC;
+		 ]]>
+	</select>
+	
+	<select id="selectadmincount" resultType="int" >
+		<![CDATA[
+			select count(*) from admin_tbl 
+		]]>
+	</select>
+	
+	
+	
+	<select id="adminlogin" resultMap="adminmemResult" parameterType="adminmemberVO" >
+		<![CDATA[ 
+			SELECT * FROM admin_tbl where admin_id = #{admin_id} and admin_pw = #{admin_pw}
+		 ]]>
+	</select>
+	
+	<delete id="deladmin" parameterType="java.util.HashMap">
+		DELETE FROM admin_tbl WHERE admin_id IN 
+        <foreach collection="params" item="item" index="index" separator="," open="(" close=")">
+         #{item}
+         </foreach>
+	</delete>
+	
+	
+<!-- 	<select id="selectsearchMenu" resultMap="proResult" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} and pro_name like CONCAT('%',#{search},'%') ORDER BY reg_date DESC		
+		 ]]>
+	</select>
+	
+	<delete id="deletemenu" parameterType="java.util.HashMap">
+		DELETE FROM product_tbl WHERE seller_id = #{seller_id}
+        and pro_num IN 
+        <foreach collection="params" item="item" index="index" separator="," open="(" close=")">
+         #{item}
+         </foreach>
+	</delete>
+	
+	<select id="menudetail" resultMap="proResult" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} and pro_num = #{pro_num}		
+		 ]]>
+	</select>
+	
+	<select id="selectinfosum" resultMap="infosumResult" parameterType="String">
+		<![CDATA[ 
+		SELECT *, (SELECT COUNT(*) FROM wish_tbl WHERE seller_id = #{seller_id}) AS wish_sum, (SELECT COUNT(*) FROM review_tbl WHERE seller_id = #{seller_id}) AS review_sum, (SELECT COUNT(*) FROM book_tbl WHERE seller_id = #{seller_id}) AS book_sum FROM storeinfo_tbl WHERE seller_id=#{seller_id}
+		 ]]>
+	</select>
+	
+	<delete id="delonemenu" parameterType="java.util.HashMap">
+		<![CDATA[
+		DELETE FROM product_tbl WHERE seller_id = #{seller_id} and pro_num = #{pro_num}
+		]]>
+	</delete>
+	
+	
+	<update id="modProduct" parameterType="productVO" >
+			update product_tbl
+			set pro_name = #{pro_name},
+			pro_price = #{pro_price},
+			pro_desc = #{pro_desc},
+			mod_date = now()
+			<if test="pro_img != '' and pro_img != null">
+			, pro_img = #{pro_img} 
+			</if>
+			where pro_num=#{pro_num} and seller_id = #{seller_id}
+	</update>
+	
+	
+	<insert id="menumadd" parameterType="java.util.HashMap">
+		INSERT INTO product_tbl SET 
+		pro_num = (select max(pro_num)+1 from product_tbl a)  , category_code = #{category_code}, seller_id = #{seller_id} , pro_name= #{pro_name}, pro_price=#{pro_price}, pro_desc=#{pro_desc}, reg_date = NOW()
+		<if test="pro_img != '' and pro_img != null">
+			, pro_img = #{pro_img} 
+		</if>
+	</insert>
+	 -->
+	
+	
+	
+	
+</mapper>

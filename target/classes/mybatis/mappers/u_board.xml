@@ -148,7 +148,7 @@
 	</insert>
 	<select id="selectNewImage_num" resultType="int">
 		<![CDATA[
-			select max(image_num)+1 from u_image_tbl 			
+			select IFNULL(MAX(image_num)+1,1) from u_image_tbl 			
 		 ]]>
 	</select>
 	<update id="likeUp" parameterType="int">

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
+import com.spring.ec.common.visit.VisitVO;
 import com.spring.ec.seller.vo.ProductVO;
 import com.spring.ec.seller.vo.SellerVO;
 import com.spring.ec.seller.vo.StoreVO;
@@ -46,10 +47,13 @@ public interface CateDAO {
 
 	public String selectsellerwishsum(String seller_id) throws DataAccessException;
 
-	// ����
+	// ����
 	public ReservVO selectStoreInfo2(String seller_id) throws DataAccessException;
 	
 	public int insertBooking(Map reserv) throws DataAccessException;
 	
 	public int insertNoUserBooking(Map reserv) throws DataAccessException;
+	
+	//방문자로 추가(같은 아이피에 같은 날 다시 insert 안됨
+		public int insertVisitor(VisitVO vo) throws DataAccessException;
 }

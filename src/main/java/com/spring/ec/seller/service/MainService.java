@@ -1,8 +1,7 @@
 package com.spring.ec.seller.service;
 
-import java.util.List;
-
-import com.spring.ec.user.vo.NoticeVO;
+import com.spring.ec.common.visit.VisitVO;
 
 public interface MainService {
+	public void visitor(VisitVO vo)throws Exception;
 }
