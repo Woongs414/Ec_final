@@ -196,7 +196,7 @@ String viewName = (String)request.getAttribute("viewName");
 		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${kakaoLogin}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
 		</c:when>
 		<c:when test="${isLogOn == true }">
-		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${kakaoLogin}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
+		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${isLogOn}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
 		</c:when>
 		<c:otherwise>	
 		<button type="button" class="btn btn-light" id="writeBoard" onClick="fn_boardForm('${isLogOn}', '${contextPath}/user/u_board/boardForm', '${contextPath}/user/loginForm.do')">글쓰기</button>
