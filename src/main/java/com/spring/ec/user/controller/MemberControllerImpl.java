@@ -274,14 +274,12 @@ public class MemberControllerImpl implements MemberController {
 		String user_id = request.getParameter("user_id");
 		String user_email = request.getParameter("user_email");
 		memberVO.setUser_name(user_name);
-		memberVO.setTel(user_id);
+		memberVO.setUser_id(user_id);
 		memberVO.setUser_email(user_email);
 		String user_pwd = memService.find_pwd_Result(memberVO);
 		System.out.println("user_pwd : " +user_pwd);
 		if(user_pwd == null) {
-			
 			mav.addObject("check",1);
-			
 			mav.setViewName(viewName);
 		}else {
 			mav.addObject("check",0);
