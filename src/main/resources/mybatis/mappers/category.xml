@@ -79,6 +79,7 @@
 		<result column="user_id" property="user_id" />
 		<result column="seller_id" property="seller_id" />
 		<result column="wish_sum" property="wish_sum" />
+		<result column="reg_date" property="reg_date" />
 	</resultMap>
 	
 	<resultMap type="reservVO" id="reservResult">
@@ -87,6 +88,7 @@
 		<result property="seller_tel" column="seller_tel" />
 		<result property="seller_name" column="seller_name" />
 		<result property="seller_addr" column="seller_addr" />
+		<result property="seller_detailaddr" column="seller_detailaddr" />
 		<result property="seller_bizReg" column="seller_bizReg" />
 		<result property="open_time" column="open_time" />
 		<result property="close_time" column="close_time" />
@@ -94,6 +96,24 @@
 		<result property="max_People" column="max_People" />
 		<result property="store_introduce" column="store_introduce" />
 		<result property="reserv_pay" column="reserv_pay" />
+	</resultMap>
+	
+	<!-- 리뷰 답변 포함 -->
+	<resultMap id="reAnsResult" type="reAnsVO">
+		<result column="re_ans_num" property="re_ans_num" />
+		<result column="review_num" property="review_num" />
+		<result column="seller_id" property="seller_id" />
+		<result column="user_id" property="user_id" />
+		<result column="content" property="content" />
+		<result column="rating" property="rating" />
+		<result column="liked" property="liked" />
+		<result column="user_nick" property="user_nick" />
+		<result column="re_ans_content" property="re_ans_content" />
+		<result column="reg_date" property="reg_date" />
+		<result column="mod_date" property="mod_date" />
+		<result column="ans_reg_date" property="ans_reg_date" />
+		<result column="ans_mod_date" property="mod_date" />
+		<result column="rating_percent" property="rating_percent" />
 	</resultMap>
 	
 	<!--카테고리-가게select  -->
@@ -109,9 +129,19 @@
 	
 	
 	<!--카테고리-가게리뷰 select  -->
-	<select id="selectReview" resultMap="revResult">
-		<![CDATA[ SELECT *, (rating / 5.0) * 100 as rating_percent FROM review_tbl order by reg_date desc ]]>
+	<select id="selectReview" resultMap="reAnsResult" parameterType="java.util.Map">
+		<![CDATA[ 
+		SELECT r.review_num,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.reg_date, r.mod_date, 
+		a.re_ans_content ,a.reg_date AS ans_reg_date , a.mod_date AS ans_mod_date, a.re_ans_num,
+		(r.rating / 5.0) * 100 as rating_percent
+		FROM review_tbl AS r LEFT OUTER JOIN review_ans_tbl AS a
+		ON r.review_num = a.review_num ORDER BY r.reg_date desc	
+		 ]]>
 	</select>
+	
+<!-- 	<select id="selectReview" resultMap="revResult">
+		<![CDATA[ SELECT *, (rating / 5.0) * 100 as rating_percent FROM review_tbl order by reg_date desc ]]>
+	</select> -->
 	
 	
 	<!--카테고리-리뷰 좋아요 update  -->
@@ -186,7 +216,7 @@
 	<insert id="addwish" parameterType="java.util.HashMap" >
 		<![CDATA[
 		insert into wish_tbl(wish_num,category_code,user_id,seller_id,reg_date)
-			values((SELECT IFNULL(MAX(wish_num)+1,1) FROM wish_tbl b), #{category_code}, #{user_id}, #{seller_id},now())
+			values((SELECT IFNULL(MAX(wish_num)+1,1) FROM wish_tbl b), 10, #{user_id}, #{seller_id},now())
 		]]>
 	</insert>
 	
@@ -234,7 +264,7 @@
 	<select id="selectStoreInfo" resultMap="reservResult" parameterType="String">
 		<![CDATA[ 
 		select sel.seller_id,sto.store_nic ,sel.seller_tel, sel.seller_name, 
-		sel.seller_addr,sel.seller_bizReg, sto.open_time, sto.close_time,
+		sel.seller_addr, sel.seller_detailaddr, sel.seller_bizReg, sto.open_time, sto.close_time,
 		sto.min_People, sto.max_People, sto.store_introduce,sto.reserv_pay
 		from seller_tbl as sel , storeInfo_tbl as sto
 		where sel.seller_id = sto.seller_id and sel.seller_id = #{seller_id} 
@@ -242,19 +272,19 @@
 	</select>
 	<insert id="insertUserBooking" parameterType="java.util.Map">
 	<![CDATA[
-			insert into book_tbl (book_num,seller_id,user_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id,reserv_status)
-			values((SELECT IFNULL(MAX(book_num)+1,1) FROM book_tbl aa),#{seller_id},#{user_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id},1)
+			insert into book_tbl (book_num,seller_id,user_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id)
+			values(#{book_num},#{seller_id},#{user_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id})
 		]]>
 	</insert>
 	<select id="selectNewUserBook_num" resultType="int">
 		<![CDATA[
-			select IFNULL(MAX(book_num)+1,1) from book_tbl 			
+			select max(book_num)+1 from book_tbl 			
 		 ]]>
 	</select>
 	<insert id="insertNoUserBooking" parameterType="java.util.Map">
 	<![CDATA[
-			insert into nouser_book_tbl (book_num,seller_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id,reserv_status)
-			values(#{book_num},#{seller_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id},1)
+			insert into nouser_book_tbl (book_num,seller_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id)
+			values(#{book_num},#{seller_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id})
 		]]>
 	</insert>
 	<select id="selectNewNoUserBook_num" resultType="int">

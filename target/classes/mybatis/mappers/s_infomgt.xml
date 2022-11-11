@@ -20,6 +20,7 @@
 		<result property="pro_sum" column="pro_sum" />
 		<result property="pro_img" column="pro_img" />
 		<result property="reg_days" column="reg_days" />
+		<result property="rownum" column="rownum" />
 	</resultMap>
 	
 	<resultMap type="StoreinfosumVO" id="infosumResult">
@@ -45,15 +46,16 @@
 	
 	
 	
-	<select id="selectMenu" resultMap="proResult" parameterType="String">
+	<select id="selectMenu" resultMap="proResult" parameterType="java.util.HashMap">
 		<![CDATA[ 
-		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} ORDER BY reg_date DESC		
+		SELECT *, TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM (SELECT *,  @rownum := @rownum +1 AS rownum from product_tbl, (SELECT @rownum :=0) AS r where seller_id = #{seller_id} ORDER BY rownum LIMIT #{daopage},10 ) AS a ORDER BY reg_date DESC;
+				
 		 ]]>
 	</select>
 	
 	<select id="selectsearchMenu" resultMap="proResult" parameterType="java.util.HashMap">
 		<![CDATA[ 
-		SELECT * , TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM product_tbl where seller_id = #{seller_id} and pro_name like CONCAT('%',#{search},'%') ORDER BY reg_date DESC		
+		SELECT *, TIMESTAMPDIFF(DAY, reg_date, NOW()) as reg_days FROM (SELECT *,  @rownum := @rownum +1 AS rownum from product_tbl, (SELECT @rownum :=0) AS r where seller_id = #{seller_id} and pro_name like CONCAT('%',#{search},'%') ORDER BY rownum LIMIT #{daopage},10 ) AS a ORDER BY reg_date DESC;		
 		 ]]>
 	</select>
 	
@@ -104,6 +106,22 @@
 			, pro_img = #{pro_img} 
 		</if>
 	</insert>
+	
+	
+	<select id="selectmenucount" resultType="int" parameterType="String">
+	
+		<![CDATA[ 
+		select count(*) from product_tbl where seller_id=#{seller_id}		
+		 ]]>
+	</select>
+	
+	<select id="searchmenucount" resultType="int" parameterType="java.util.HashMap">
+	
+		<![CDATA[ 
+		select count(*) from product_tbl where seller_id=#{seller_id} and pro_name like CONCAT('%',#{search},'%')	
+		 ]]>
+	</select>
+	
 	
 	
 	

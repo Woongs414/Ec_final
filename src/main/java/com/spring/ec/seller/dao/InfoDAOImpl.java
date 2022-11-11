@@ -17,14 +17,14 @@ public class InfoDAOImpl implements InfoDAO {
 
 	//menu select
 	@Override
-	public List<ProductVO> selectMenu(String seller_id) throws Exception {
-		List<ProductVO> articlesList = sqlSession.selectList("mapper.seller.menu.selectMenu",seller_id);
+	public List<ProductVO> selectMenu(Map<String, Object> listMap) throws Exception {
+		List<ProductVO> articlesList = sqlSession.selectList("mapper.seller.menu.selectMenu",listMap);
 		return articlesList;
 	}
 	
 	//menu search select
 	@Override
-	public List<ProductVO> selectsearchMenu(Map<String, String> listMap) throws Exception {
+	public List<ProductVO> selectsearchMenu(Map<String, Object> listMap) throws Exception {
 		List<ProductVO> articlesList = sqlSession.selectList("mapper.seller.menu.selectsearchMenu",listMap);
 		return articlesList;
 	}
@@ -72,6 +72,20 @@ public class InfoDAOImpl implements InfoDAO {
 	public int menumadd(Map<String, Object> menuMap) throws Exception {
 		int menumadd = sqlSession.insert("mapper.seller.menu.menumadd",menuMap);
 		return menumadd;
+	}
+	
+	//menu list count
+	@Override
+	public int selectmenucount(String seller_id) throws Exception {
+		int menucount = sqlSession.selectOne("mapper.seller.menu.selectmenucount",seller_id);
+		return menucount;
+	}
+	
+	//menu search list count
+	@Override
+	public int searchmenucount(Map<String, Object> listMap) throws Exception {
+		int menucount = sqlSession.selectOne("mapper.seller.menu.searchmenucount",listMap);
+		return menucount;
 	}
 	
 	

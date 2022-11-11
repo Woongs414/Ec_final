@@ -18,14 +18,14 @@ public class InfoServiceImpl implements InfoService {
 
 	//product(menu) list select
 	@Override
-	public List<ProductVO> selectMenu(String seller_id) throws Exception {
-		return infoDAO.selectMenu(seller_id);
+	public List<ProductVO> selectMenu(Map<String, Object> listMap) throws Exception {
+		return infoDAO.selectMenu(listMap);
 	}
 	
 	
 	//product(menu) search select
 	@Override
-	public List<ProductVO> 	selectsearchMenu(Map<String, String> listMap) throws Exception {
+	public List<ProductVO> 	selectsearchMenu(Map<String, Object> listMap) throws Exception {
 		return infoDAO.selectsearchMenu(listMap);
 	}
 	
@@ -71,6 +71,20 @@ public class InfoServiceImpl implements InfoService {
 	}
 	
 	
+	
+	
+	
+	//product(menu) list count
+	@Override
+	public int selectmenucount(String seller_id) throws Exception {
+		return infoDAO.selectmenucount(seller_id);
+	}
+	
+	//product(menu) search list count
+	@Override
+	public int searchmenucount(Map<String, Object> listMap) throws Exception {
+		return infoDAO.searchmenucount(listMap);
+	}
 	
 	
 	

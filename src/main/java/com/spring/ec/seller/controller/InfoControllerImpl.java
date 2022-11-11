@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.spring.ec.admin.vo.MemberVO;
 import com.spring.ec.seller.service.InfoService;
 import com.spring.ec.seller.vo.ProductVO;
 import com.spring.ec.seller.vo.SellerVO;
@@ -61,19 +61,68 @@ public class InfoControllerImpl implements InfoController  {
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
+		Map<String, Object> listMap = new HashMap<String, Object>();
+		Map paging = new HashMap();
 		//session에 남아있는 sellerid를 가져와야함
 		HttpSession session = request.getSession();
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
 		String seller_id = sellerVO.getSeller_id();
+		listMap.put("seller_id", seller_id);
+		
+		
+		//s:페이징
+				int menuCount = infoService.selectmenucount(seller_id);
+				int page = 1;
+				if (request.getParameter("page") != null) {
+					page = Integer.parseInt(request.getParameter("page"));
+				}
+				
+				listMap.put("daopage", (page - 1) * 10);
+				
+				
+				//해당 가게 메뉴 리스트
+				List<ProductVO> MenuList = infoService.selectMenu(listMap);
+				//List<MemberVO> adminlist = adminmagService.selectadminlist(page);
+				if(MenuList.size() != 0) {
+					
+					//list의 최소 index 변수
+					int startlistindex = MenuList.get(0).getRownum();
+					//list의 최대 index 변수
+					int endlistindex = 0;
+					//rownum 최대값 구하기
+					for(int i  = 0; i < MenuList.size(); i++ ) {
+						if(MenuList.get(i).getRownum() > endlistindex) {
+							endlistindex = MenuList.get(i).getRownum();
+							
+						}
+						
+					}
+					
+					//rownum 최소값 구하기
+					for(int i  = 0; i < MenuList.size(); i++ ) {
+						if(MenuList.get(i).getRownum() < startlistindex) {
+							startlistindex = MenuList.get(i).getRownum();
+						}
+					}
+					paging.put("startlistindex", startlistindex);	
+					paging.put("endlistindex", endlistindex);
+				}
+				
+				//e:페이징
 		
 		//해당 가게의 찜,리뷰,예약 조회
 		StoreinfosumVO infosum = infoService.selectinfosum(seller_id);
 		
 		//해당 가게 메뉴 리스트
-		List<ProductVO> MenuList = infoService.selectMenu(seller_id);
+		//List<ProductVO> MenuList = infoService.selectMenu(seller_id);
+		
+		paging.put("menuCount", menuCount);
+		paging.put("nowPage", page);
+		
 		
 		mav.addObject("infosum", infosum);
 		mav.addObject("menuList", MenuList);
+		mav.addObject("paging", paging);
 		mav.setViewName(viewName);
 		return mav; 
 	}
@@ -88,9 +137,10 @@ public class InfoControllerImpl implements InfoController  {
 	public ModelAndView searchmenu(@RequestParam("search") String search,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
-		Map<String, String> listMap = new HashMap<String, String>();
+		Map<String, Object> listMap = new HashMap<String, Object>();
 		//session에 남아있는 sellerid를 가져와야함
 		HttpSession session = request.getSession();
+		Map paging = new HashMap();
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
 		String seller_id = sellerVO.getSeller_id();
 				
@@ -98,9 +148,55 @@ public class InfoControllerImpl implements InfoController  {
 		listMap.put("seller_id", seller_id);
 		listMap.put("search", search);
 		
+		
+		//s:페이징
+		int menuCount = infoService.searchmenucount(listMap);
+		int page = 1;
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		listMap.put("daopage", (page - 1) * 10);
+		
+		
+		//해당 가게 메뉴 리스트
 		List<ProductVO> MenuList = infoService.selectsearchMenu(listMap);
+		//List<MemberVO> adminlist = adminmagService.selectadminlist(page);
+		if(MenuList.size() != 0) {
+			
+			//list의 최소 index 변수
+			int startlistindex = MenuList.get(0).getRownum();
+			//list의 최대 index 변수
+			int endlistindex = 0;
+			//rownum 최대값 구하기
+			for(int i  = 0; i < MenuList.size(); i++ ) {
+				if(MenuList.get(i).getRownum() > endlistindex) {
+					endlistindex = MenuList.get(i).getRownum();
+					
+				}
+				
+			}
+			
+			//rownum 최소값 구하기
+			for(int i  = 0; i < MenuList.size(); i++ ) {
+				if(MenuList.get(i).getRownum() < startlistindex) {
+					startlistindex = MenuList.get(i).getRownum();
+				}
+			}
+			paging.put("startlistindex", startlistindex);	
+			paging.put("endlistindex", endlistindex);
+		}
+		
+		//e:페이징
+		
+		
+		
+		paging.put("menuCount", menuCount);
+		paging.put("nowPage", page);
+
 		
 		mav.addObject("menuList", MenuList);
+		mav.addObject("paging", paging);
 		mav.setViewName(viewName);
 		return mav; 
 	}

@@ -179,7 +179,7 @@ public class SmypageControllerImpl implements SmypageController  {
 			//세션 끊어서 다시 로그인하기
 			session.removeAttribute("sellerMember");
 			session.removeAttribute("isLogOn");
-			rAttr.addFlashAttribute("result", "pwdchangesuccess");
+			rAttr.addFlashAttribute("result", "pwdchagesuccess");
 			mav.setViewName("redirect:/seller/member/loginForm.do");
  
 		} else { 

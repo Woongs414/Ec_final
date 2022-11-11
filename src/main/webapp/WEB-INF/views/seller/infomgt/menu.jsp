@@ -540,14 +540,23 @@ function readURL(input) {
             <!-- /.card-body -->
             <div class="card-footer p-0">
                 <div class="mailbox-controls float-right">
-                  1-50/200
+                 <c:if test="${menuList.size() == 1}">
+                		${paging.endlistindex }/${paging.menuCount }
+                	</c:if>
+                	<c:if test="${menuList.size() > 1}">
+                  		${paging.startlistindex }-${paging.endlistindex }/${paging.menuCount }
+                  	</c:if>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
+                    <c:if test="${paging.startlistindex != 1}">
+                    <button type="button" class="btn btn-default btn-sm" style="margin-right: 10px;" onclick="location.href='${contextPath}/menumanage.do?page=${paging.nowPage - 1}'">
                       <i class="fas fa-chevron-left"></i>
                     </button>
-                    <button type="button" class="btn btn-default btn-sm">
+                   </c:if>
+                   <c:if test="${paging.endlistindex != paging.menuCount}">
+                    <button type="button" class="btn btn-default btn-sm" style="margin-left: 10px;"  onclick="location.href='${contextPath}/menumanage.do?page=${paging.nowPage + 1}'" >
                       <i class="fas fa-chevron-right"></i>
                     </button>
+                    </c:if>
                   </div>
                   <!-- /.btn-group -->
                 </div>

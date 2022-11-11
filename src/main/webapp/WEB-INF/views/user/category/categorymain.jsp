@@ -2521,6 +2521,53 @@ textarea {
 }
 
 
+/* 리뷰 답글 */
+
+.eCPGL ._B08D {
+    position: relative;
+    margin-top: 20px;
+    padding: 16px 18px 14px;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    background: #f4f7f8;
+}
+
+.eCPGL ._B08D .PtIou {
+    fill: #f4f7f8;
+    position: absolute;
+    top: -14px;
+    left: 0;
+}
+
+.eCPGL ._B08D .dMMR7 {
+    font-size: 1.4rem;
+    word-wrap: break-word;
+}
+
+.eCPGL ._B08D .dMMR7 .P1zUJ.xX4tE {
+    font-weight: bold;
+    color: #333;
+}
+
+.eCPGL ._B08D .dMMR7 .P1zUJ {
+    display: inline-block;
+    vertical-align: top;
+    color: #8f8f8f;
+}
+
+.eCPGL ._B08D .dMMR7 .P1zUJ {
+    display: inline-block;
+    vertical-align: top;
+    color: #8f8f8f;
+}
+
+.eCPGL ._B08D .h1CDl {
+    margin-top: 4px;
+    font-size: 1.5rem;
+    color: #666;
+    line-height: 2.2rem;
+    word-wrap: break-word;
+}
 
 </style>
 
@@ -2687,7 +2734,7 @@ function like(review_num,likenumid) {
 
 
 /*찜 추가/삭제  */
-function wishstate(seller_id, imgid,wishid,category_code) {
+function wishstate(seller_id, imgid,wishid) {
 	var user_id = "${member.user_id}";
 	var seller_id = seller_id;
 	var status = $( imgid ).attr( 'status' );
@@ -2703,8 +2750,7 @@ function wishstate(seller_id, imgid,wishid,category_code) {
 				dataType:"text",
 				data : {
 					user_id : user_id,
-					seller_id : seller_id,
-					category_code:category_code
+					seller_id : seller_id
 					
 				},
 			    success: function (data) {
@@ -3097,12 +3143,12 @@ geocoder.addressSearch(addr,function(result, status){
 			<%-- <a href="${contextPath }/storeInfo.do?seller_id=${store.seller_id}"> --%>
 					<div class="card" data-bs-toggle="offcanvas" href="#${store.seller_id }"  aria-controls="offcanvasExample" style="margin-top:10px; margin-left: 5px; margin-right: 5px;" id="card${storeNum.index }" OnMouseUp="cardreview('js-load${storeNum.index}');" onClick="setCenter('${store.seller_addr}')">
 
-	 					<img src="${contextPath }/image/store_img/${store.image_fileName}" class="card-img-top" alt="..." width="299" height="180" onclick="setcenter">
+	 					<img src="${contextPath}/image/store_img/${store.image_fileName}" class="card-img-top" alt="..." width="299" height="180" onclick="setcenter">
 
 		  				<div class="card-body">
 		   				<p class="card-text">
 		    				<h1>${store.seller_name }</h1>
-		    				<span style="font-size: small">${store.seller_addr }</span> <br>
+		    				<span style="font-size: small">${store.seller_addr}${store.seller_detailaddr }</span> <br>
 		    				<span class="badge bg-warning text-dark">${store.keyword }</span>
 		    				<c:if test="${store.category_code eq 10 }">
 		    					<span class="badge bg-primary">먹거리</span>
@@ -3239,7 +3285,7 @@ geocoder.addressSearch(addr,function(result, status){
 									</span>
 									
 									<span class="yxkiA">
-										<a href="#" target="_self" role="button" class="D_Xqt" aria-pressed="false"  onclick="wishstate('${store.seller_id }', wish${storeNum.index}, wishsum${storeNum.index },${store.category_code });">
+										<a href="#" target="_self" role="button" class="D_Xqt" aria-pressed="false"  onclick="wishstate('${store.seller_id }', wish${storeNum.index}, wishsum${storeNum.index });">
 										<img alt="nowish" src="image/nowish.png" width="20" height="20" status="false" id="wish${storeNum.index}">
 										찜하기
 										<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="Mq0QC" aria-hidden="true">
@@ -3258,28 +3304,6 @@ geocoder.addressSearch(addr,function(result, status){
 
 									</span>
 
-									
-
-<!-- 									<span class="yxkiA">
-									<a href="javascript:openPop()" id="_btp.share" class="D_Xqt naver-splugin spi_sns_share" target="_self" data-style="type_a" data-title="임천정육식당 대전 동구 백룡로6번길 104"
-										data-line-template-type="custom_web" data-line-title="임천정육식당"
-										data-line-description="대전 동구 백룡로6번길 104"
-										data-kakaotalk-template-type="custom_web"
-										data-kakaotalk-title="임천정육식당"
-										data-kakaotalk-description="대전 동구 백룡로6번길 104"
-										data-kakaotalk-image-url="https://search.pstatic.net/common/?autoRotate=true&amp;quality=100&amp;type=f640_380&amp;src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20170605_201%2F1496647022238EwwJL_JPEG%2F186555564720825_0.jpeg"
-										data-kakaotalk-button-text="자세히 보기"
-										data-url-extra="임천정육식당 대전 동구 백룡로6번길 104"									
-										data-friend-display="on" data-kakaostory-display="off"
-										data-bookmark-display="off" data-memo-display="off"
-										data-mail-display="off" data-keep-display="on"
-										data-use-short-url="on" splugin-id="1132704466"
-										data-url="http://localhost:8080/ec/category.do#">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="Mq0QC" aria-hidden="true">
-										<path d="M15.6 17.6H1.4V6.4h4.58V5H0v14h17v-4.35h-1.4v2.95zm-4.18-8.26h3.03v3.47L20 7.41 14.45 2v3.35h-3.03c-3.6 0-5.66 3.53-5.97 7.7 0 0 1.42-3.71 5.96-3.71z"></path>
-										</svg>공유</a>
-									</a>
-										</span> -->
 								</div>
 								
 							</div>
@@ -3379,7 +3403,7 @@ geocoder.addressSearch(addr,function(result, status){
 											<div class="x8JmK">
 													<a href="#" target="_self" role="button" class="pAe5G"
 														aria-haspopup="true" aria-expanded="false"><span
-														class="IH7VW">${store.seller_addr }</span></a>
+														class="IH7VW">${store.seller_addr}${store.seller_detailaddr }</span></a>
 												</div></li>
 	<!-- 										<li class="SF_Mq"><strong class="RmIE4"><svg
 														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 18"
@@ -3541,7 +3565,7 @@ geocoder.addressSearch(addr,function(result, status){
 											<a href="#" role="button" class="Ozh8q">
 												<div class="ZHqBk">
 												<div class="place_thumb">
-													<img src="${contextPath}/image/menu/${product.seller_id }/${product.pro_img }" width="100%" height="auto">
+													<img src="${contextPath}/menu/download.do?seller_id=${product.seller_id}&imageFileName=${product.pro_img}" width="100%" height="auto">
 												</div>
 												</div>
 													<div class="MN48z">
@@ -3751,7 +3775,7 @@ geocoder.addressSearch(addr,function(result, status){
 														class="qpNnn"><div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id }/${menu.pro_img });">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/menu/download.do?seller_id=${menu.seller_id}&imageFileName=${menu.pro_img});">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
@@ -4022,7 +4046,22 @@ geocoder.addressSearch(addr,function(result, status){
 																	방문일</span>
 															<time aria-hidden="true">${review.reg_date}</time></span>
 														</div>
-														</li>
+														
+														<!-- 리뷰 답변 -->
+														<c:if test="${review.re_ans_num ne 0 }">
+														<div class="_B08D">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="14"
+																			height="14" class="PtIou">
+																			<path d="M0 0c2.46 9.33 7.13 14 14 14H0V0z"></path></svg>
+																		<div class="dMMR7">
+																			<span class="P1zUJ xX4tE">${review.seller_id } / </span>
+																			<span
+																				class="P1zUJ">${review.ans_reg_date }</span>
+																		</div>
+																		<div class="h1CDl">${review.re_ans_content}</div>
+															</div>
+															</c:if>
+															</li>
 														</div>
 														</c:if>
 														</c:forEach>

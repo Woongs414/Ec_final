@@ -22,13 +22,14 @@ public class ProductVO {
 	private Date mod_date;
 	private int pro_sum;
 	private int reg_days;
+	private int rownum;
 	
 	
 	public ProductVO() {
 
 	}
 
-	public ProductVO(int pro_num, String category_code, String seller_id, String pro_name, String pro_img,String pro_price, int pro_stock, String pro_desc,int pro_count,int sales,double commision,Date reg_date, Date mod_date,int pro_sum,int reg_days) {
+	public ProductVO(int pro_num, String category_code, String seller_id, String pro_name, String pro_img,String pro_price, int pro_stock, String pro_desc,int pro_count,int sales,double commision,Date reg_date, Date mod_date,int pro_sum,int reg_days,int rownum) {
 		this.pro_num = pro_num;
 		this.category_code = category_code;
 		this.seller_id= seller_id;
@@ -44,6 +45,7 @@ public class ProductVO {
 		this.mod_date = mod_date;
 		this.pro_sum = pro_sum;
 		this.reg_days = reg_days;
+		this.rownum = rownum;
 		
 	}
 
@@ -167,6 +169,14 @@ public class ProductVO {
 
 	public void setReg_days(int reg_days) {
 		this.reg_days = reg_days;
+	}
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
 	}
 	
 	
