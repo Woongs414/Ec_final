@@ -63,10 +63,10 @@ CREATE TABLE IF NOT EXISTS `book_tbl` (
 -- 테이블 데이터 mydb.book_tbl:~4 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `book_tbl` DISABLE KEYS */;
 INSERT INTO `book_tbl` (`book_num`, `seller_id`, `user_id`, `user_name`, `reserv_date`, `reserv_time`, `user_tel`, `count_pp`, `user_email`, `reserv_pay`, `reg_date`, `order_id`, `reserv_status`) VALUES
-	(1, 'stest001', 'qwer1', '홍길동', '2022-11-25', '11:00:00', '01012345678', 2, 'ec_test@naver.com', 10000, '2022-11-07', 'bnmEeZCri0', 1),
-	(2, 'stest001', '2441041630', '성웅', '2022-11-25', '14:00:00', '카카오사용자10', 2, 'sungwoong414@naver.com', 10000, '2022-11-08', 'yZSNsgkBSO', 1),
-	(3, 'stest001', '2441041630', '성웅', '2022-11-25', '14:00:00', '카카오사용자10', 5, 'sungwoong414@naver.com', 10000, '2022-11-08', 'yZSNsgkBSO', 1),
-	(4, 'stest007', 'abcd123', '양닉스', '2022-11-16', '17:00:00', '01023123123', 2, 'ec_test12@naver.com', 10000, '2022-11-08', 'h4JJ5bKW1U', 2);
+	(1, 'stest001', 'qwer1', '홍길동', '2022-11-25', '11:00:00', '01012345678', 2, 'ec_test@naver.com', 10000, '2022-11-07', 'bnmEeZCri0', 2),
+	(4, 'stest007', 'abcd123', '양닉스', '2022-11-16', '17:00:00', '01023123123', 2, 'ec_test12@naver.com', 10000, '2022-11-08', 'h4JJ5bKW1U', 2),
+	(5, 'stest001', '2441041630', '성웅', '2022-11-17', '14:00:00', '카카오사용자13', 3, 'sungwoong414@naver.com', 10000, '2022-11-10', 'G4TgaO28tT', 2),
+	(6, 'stest003', '2441041630', '성웅', '2022-11-16', '14:00:00', '카카오사용자13', 2, 'sungwoong414@naver.com', 10000, '2022-11-10', 'HaE9rI1nlf', 2);
 /*!40000 ALTER TABLE `book_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.category_tbl 구조 내보내기
@@ -217,7 +217,7 @@ INSERT INTO `notice_tbl` (`list_num`, `category_code`, `admin_id`, `no_title`, `
 	(1, '9-1', 'admin', '공지사항 테스트1', '공지사항 내용1', '', '2022-10-04', NULL, 0),
 	(2, '9-1', 'admin', '공지사항 테스트2', '공지사항 내용2', '', '2022-10-04', NULL, 0),
 	(3, '9-1', 'admin', '공지사항 테스트3', '공지사항 내용3', '', '2022-10-04', NULL, 0),
-	(4, '9-1', 'admin', '공지사항 테스트4', '공지사항 내용4', '', '2022-10-04', NULL, 1),
+	(4, '9-1', 'admin', '공지사항 테스트4', '공지사항 내용4', '', '2022-10-04', NULL, 2),
 	(5, '9-1', 'admin', '공지사항 테스트5', '공지사항 내용5', '', '2022-10-04', NULL, 1),
 	(6, '9-1', 'admin', '공지사항 테스트6', '공지사항 내용6', '', '2022-10-04', NULL, 3),
 	(7, '9-1', 'admin', '공지사항 테스트7', '공지사항 내용7', '', '2022-10-04', NULL, 3),
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `nouser_book_tbl` (
 -- 테이블 데이터 mydb.nouser_book_tbl:~8 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `nouser_book_tbl` DISABLE KEYS */;
 INSERT INTO `nouser_book_tbl` (`book_num`, `seller_id`, `user_name`, `reserv_date`, `reserv_time`, `user_tel`, `count_pp`, `user_email`, `reserv_pay`, `reg_date`, `order_id`, `reserv_status`) VALUES
-	(1, 'stest001', '김희재', '2022-11-03', '12:30:00', '010-2222-2222', 2, NULL, 10000, '2022-10-06', 'asdfghjklp', 1),
+	(1, 'stest001', '김희재', '2022-11-03', '12:30:00', '010-2222-2222', 2, NULL, 10000, '2022-10-06', 'asdfghjklp', 2),
 	(2, 'stest002', '김희재', '2022-10-17', '14:00:00', '010-2222-2222', 2, 'dddd@test.com', 0, '2022-10-06', 'wUZOcWxaWP', 1),
 	(3, 'stest002', '김희재', '2022-10-17', '14:00:00', '010-2222-2222', 2, 'dddd@test.com', 0, '2022-10-06', 'wUZOcWxaWP', 1),
 	(4, 'stest002', '김희재', '2022-10-17', '14:00:00', '010-2222-2222', 2, 'dddd@test.com', 0, '2022-10-06', 'wUZOcWxaWP', 2),
@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `product_tbl` (
 -- 테이블 데이터 mydb.product_tbl:~70 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `product_tbl` DISABLE KEYS */;
 INSERT INTO `product_tbl` (`pro_num`, `category_code`, `seller_id`, `pro_name`, `pro_img`, `pro_price`, `pro_stock`, `pro_desc`, `pro_count`, `sales`, `commision`, `reg_date`, `mod_date`) VALUES
-	(1, '10', 'stest001', '프리미엄 작살 삼겹', '1.jpg', '14000', NULL, '국내산 삼겹살에 엄청난 칼집을 넣어 부드러운의 초 극대화', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
+	(1, '10', 'stest001', '프리미엄 작살 삼', '1.jpg', '14000', NULL, '국내산 삼겹살에 엄청난 칼집을 넣어 부드러운의 초 극대화', NULL, NULL, NULL, '2022-10-06', '2022-11-10'),
 	(2, '10', 'stest001', '이베리코 끝판왕 플루마', '2.jpg', '21000', NULL, '이베리코 흑돼지 끝판왕 플루마 등심덧살부위로 천상의 맛이라 칭함', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(3, '10', 'stest001', '이베리코 흑돼지 황제살', '3.jpg', '15000', NULL, '이베리코 픅돼지중 부채살 부위로 소고기와 가장 흡사한 부위', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(4, '10', 'stest001', '이베리코 흑돼지 통갈비살', '4.jpg', '15000', NULL, '이베리코 흑돼지 늑간살로 고소하면 육즙이 풍부하면서 감칠맛이 진한부위', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
@@ -301,7 +301,6 @@ INSERT INTO `product_tbl` (`pro_num`, `category_code`, `seller_id`, `pro_name`, 
 	(8, '10', 'stest001', '국내산 통갈매기살', '8.jpg', '13000', NULL, '국내산 돼지고기중 소고기맛을 즐길수있는 부위', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(9, '10', 'stest001', '이베리코 소시지', '9.jpg', '15000', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(10, '10', 'stest001', '코다리비빔밀면', '10.jpg', '6000', NULL, '쫄깃한 면발 매콤 달콤', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
-	(11, '10', 'stest001', '주먹밥', '11.jpg', '3000', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(12, '10', 'stest021', '아메리카노', '1.jpg', '7000', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(13, '10', 'stest021', '카페라떼', 'no_menu_img.png', '7000', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(14, '10', 'stest021', '카푸치노', 'no_menu_img.png', '7000', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
@@ -360,7 +359,8 @@ INSERT INTO `product_tbl` (`pro_num`, `category_code`, `seller_id`, `pro_name`, 
 	(67, '20', 'stest030', '입장료(성인)', 'no_price_img.png', '2500', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(68, '20', 'stest030', '입장료(청소년, 군인)', 'no_price_img.png', '1700', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
 	(69, '20', 'stest030', '입장료(어린이)', 'no_price_img.png', '1000', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
-	(70, '20', 'stest030', '단체요금(20인 이상)', 'no_price_img.png', '변동', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06');
+	(70, '20', 'stest030', '단체요금(20인 이상)', 'no_price_img.png', '변동', NULL, '', NULL, NULL, NULL, '2022-10-06', '2022-10-06'),
+	(71, '10', 'qwer155', '가나다라1234', 'puppy.jpg', '12000', NULL, '6435234234', NULL, NULL, NULL, '2022-11-10', NULL);
 /*!40000 ALTER TABLE `product_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.review_ans_tbl 구조 내보내기
@@ -421,8 +421,8 @@ CREATE TABLE IF NOT EXISTS `review_tbl` (
 -- 테이블 데이터 mydb.review_tbl:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `review_tbl` DISABLE KEYS */;
 INSERT INTO `review_tbl` (`review_num`, `user_id`, `pro_num`, `seller_id`, `image_fileName`, `content`, `reg_date`, `mod_date`, `rating`, `liked`, `user_nick`) VALUES
-	(1, '2441041630', NULL, 'stest001', NULL, '안녕하세요\r\n', '2022-11-08', '2022-11-08', 5, 6, '카카오사용자10'),
-	(2, 'abcd123', NULL, 'stest007', NULL, '맛있어요~', '2022-11-08', '2022-11-08', 5, 0, '하이닉닉스');
+	(2, 'abcd123', NULL, 'stest007', NULL, '맛있어요~', '2022-11-08', '2022-11-08', 5, 0, '하이닉닉스'),
+	(3, '2441041630', NULL, 'stest001', NULL, '좋아요~', '2022-11-10', '2022-11-10', 5, 0, '카카오사용자13');
 /*!40000 ALTER TABLE `review_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.sellerreg_image_tbl 구조 내보내기
@@ -472,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `seller_tbl` (
 -- 테이블 데이터 mydb.seller_tbl:~21 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `seller_tbl` DISABLE KEYS */;
 INSERT INTO `seller_tbl` (`seller_num`, `category_code`, `seller_id`, `seller_pw`, `seller_tel`, `seller_bizReg`, `seller_name`, `s_name`, `seller_email`, `seller_addr`, `seller_detailaddr`, `addr_num`, `bizReg_image_name`, `area`, `keyword`, `reg_date`, `mod_date`) VALUES
-	(1, '10', 'stest001', '1234', '0507-1331-6400', '613-17-38218', '옥탑방', '가나', 'test001@test.com', '서울 은평구 서오릉로 115 ', NULL, '12345', 'testbizimg001.jpg', '서울특별시', '이베리코, 돼지고기구이, 삽겹살', '2022-10-06', '2022-10-06'),
+	(1, '10', 'stest001', '1234', '0507-1331-6400', '613-17-38218', '옥탑방', '가나', 'test001@test.com', '서울 은평구 서오릉로 115 ', '', '12345', 'testbizimg001.jpg', '서울특별시', '이베리코,   돼지고기구이,   삽겹살', '2022-10-06', '2022-11-10'),
 	(2, '10', 'stest002', '1234', '0507-1446-1498', '716-28-00768', '사만다 부대찌개 보라매공원점', '다라', 'chenchen**@naver.com', '서울 동작구 신대방동 395-69', NULL, '12345', 'testbizimg002.jpg', '서울특별시', '찌개, 전골, 부대찌개', '2022-10-06', '2022-10-06'),
 	(3, '10', 'stest003', '1234', '0507-1366-5348', '000-00-00000', '명동교자 본점', '마바', 'test003@test.com', '서울 중구 명동10길 29', NULL, '12345', 'testbizimg003.jpg', '서울특별시', '칼국수, 만두, 미쉐린 가이드 서울 2022', '2022-10-06', '2022-10-06'),
 	(4, '10', 'stest004', '1234', '0507-0000-0000', '274-77-00302', '런던 베이글 뮤지엄 안국점', '사', 'test004@test.com', '서울 종로구 북촌로4길 20', NULL, '12345', 'testbizimg004.jpg', '서울특별시', '베이커리, 베이글, 빵', '2022-10-06', '2022-10-06'),
@@ -492,7 +492,7 @@ INSERT INTO `seller_tbl` (`seller_num`, `category_code`, `seller_id`, `seller_pw
 	(28, '20', 'stest028', '1234', '032-456-2500', '000-00-00007', '인천어린이과학관', '에스티', 'test028@test.com', '인천 계양구 방축로 21', NULL, '12345', 'testbizimg028.jpg', '인천광역시', '과학관, 전시관, 4D영상관', '2022-10-06', '2022-10-06'),
 	(29, '20', 'stest029', '1234', '032-930-7053', '000-00-00008', '강화석모도미네랄온천', '유브이', 'test029@test.com', '인천 강화군 삼산면 삼산남로 865-17', NULL, '12345', 'testbizimg029.jpg', '인천광역시', '온천, 스파, 힐링', '2022-10-06', '2022-10-06'),
 	(30, '20', 'stest030', '1234', '032-930-7062', '000-00-00009', '강화평화전망대', '더블유', 'test030@test.com', '인천 강화군 양사면 전망대로 797', NULL, '12345', 'testbizimg030.jpg', '인천광역시', '전망대, 힐링', '2022-10-06', '2022-10-06'),
-	(31, '10', 'qwer155', 'ya1234@@', '01012347555', '6130830121', '양543', '엑스', 'id151@naver.com', '대전 동구 삼성시장1길 16', ' (삼성동)', '34622', 'border.jpg', '경상남도', '라면,,', '2022-10-31', NULL);
+	(31, '10', 'qwer15511', '1234', '01012347094', '6130830121', '동그라미', '엑스입니다', 'id123@naver.com', '대전 서구 가장로 10', ' (괴정동)', '35290', 'puppy.jpg', '울산광역시', '라볶이,라면,', '2022-11-10', NULL);
 /*!40000 ALTER TABLE `seller_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.storeinfo_image_tbl 구조 내보내기
@@ -688,7 +688,7 @@ CREATE TABLE IF NOT EXISTS `user_tbl` (
   UNIQUE KEY `tel` (`tel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 테이블 데이터 mydb.user_tbl:~11 rows (대략적) 내보내기
+-- 테이블 데이터 mydb.user_tbl:~13 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `user_tbl` DISABLE KEYS */;
 INSERT INTO `user_tbl` (`user_no`, `user_id`, `user_pwd`, `tel`, `user_nick`, `user_name`, `user_email`, `birth_yy`, `birth_mm`, `birth_dd`, `gender`, `reg_date`, `mod_date`) VALUES
 	(1, 'qwer1', '1234', '01012345678', '최초의가입자', '홍길동', 'ec_test@naver.com', '1995', '11', '14', 'M', '0000-00-00 00:00:00', NULL),
@@ -700,9 +700,10 @@ INSERT INTO `user_tbl` (`user_no`, `user_id`, `user_pwd`, `tel`, `user_nick`, `u
 	(7, 'test22', '1234card', '01022226666', '테스트22', '김희재', 'test22@test.com', '1988', '03', '3', 'M', '0000-00-00 00:00:00', NULL),
 	(8, 'abcd1234', '12341234', '01043954834', '알파벳고수', '맥도날드', 'mac@naver.com', '1999', '03', '11', 'M', '0000-00-00 00:00:00', NULL),
 	(9, 'qwer1234', 'ya1234@', '01012345674', '홍길동123', '김승현', 'ec_test1@naver.com', '1998', '03', '12', 'F', '0000-00-00 00:00:00', NULL),
-	(10, '2441041630', '카카오사용자10', '카카오사용자10', '카카오사용자10', '성웅', 'sungwoong414@naver.com', '카카오사용자10', '카카오사용자10', '카카오사용자10', 'K', '0000-00-00 00:00:00', NULL),
 	(11, '2441038662', '카카오사용자11', '카카오사용자11', '카카오사용자11', '승현', 'rlatmd98@nate.com', '카카오사용자11', '카카오사용자11', '카카오사용자11', 'K', '0000-00-00 00:00:00', NULL),
-	(12, 'abcd123', 'ya1234@@', '01023123123', '하이닉닉스', '양닉스', 'ec_test12@naver.com', '1995', '01', '11', 'M', '2022-10-28 15:04:31', '2022-10-28 15:04:31');
+	(12, 'abcd123', 'ya1234@@', '01023123123', '하이닉닉스', '양닉스', 'ec_test12@naver.com', '1995', '01', '11', 'M', '2022-10-28 15:04:31', '2022-10-28 15:04:31'),
+	(13, '2441041630', '카카오사용자13', '카카오사용자13', '카카오사용자13', '성웅', 'sungwoong414@naver.com', '카카오사용자13', '카카오사용자13', '카카오사용자13', 'K', '2022-11-10 17:16:28', '2022-11-10 17:16:28'),
+	(14, 'aaaa444', 'ya1234@@', '01023123124', '홍길동1234', '김씨', 'hong@naver.com', '1999', '02', '22', 'M', '2022-11-10 17:59:22', '2022-11-10 17:59:22');
 /*!40000 ALTER TABLE `user_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.u_ask_tbl 구조 내보내기
@@ -781,19 +782,13 @@ CREATE TABLE IF NOT EXISTS `u_board_tbl` (
   CONSTRAINT `FK_u_board_tbl_user_tbl` FOREIGN KEY (`user_id`) REFERENCES `user_tbl` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 테이블 데이터 mydb.u_board_tbl:~10 rows (대략적) 내보내기
+-- 테이블 데이터 mydb.u_board_tbl:~4 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `u_board_tbl` DISABLE KEYS */;
 INSERT INTO `u_board_tbl` (`list_num`, `parent_num`, `category_code`, `user_id`, `image_fileName`, `u_title`, `u_content`, `hits`, `liked`, `bad`, `reg_date`, `mod_date`) VALUES
-	(1, 0, '2', 'qwer1', '', '안녕하세요', '1234', 6, 0, 0, '2022-11-07', '2022-11-07'),
-	(2, 0, '1', 'qwer1', '', '안녕하세요', '234234', 4, 0, 0, '2022-11-07', '2022-11-07'),
-	(3, 0, '2', 'qwer1', '', '안녕하세요', '1234234', 2, 0, 0, '2022-11-07', '2022-11-07'),
-	(4, 0, '1', 'qwer1', '지도.JPG', '안녕하세요12w3', '123123', 9, 0, 0, '2022-11-07', '2022-11-07'),
-	(5, 0, '2', '2441041630', '', '안녕하세요', 'fdgfdgdf', 19, 0, 0, '2022-11-07', '2022-11-07'),
-	(6, 0, '1', '2441041630', '', '안녕하세요', 'dfdf', 6, 0, 0, '2022-11-07', '2022-11-07'),
-	(7, 0, '2', '2441041630', '', '안녕하세요', 'sdfdsfdsf', 4, 0, 0, '2022-11-07', '2022-11-07'),
-	(8, 0, '1', '2441041630', '지도.JPG', '안녕하세요12w3123123', '', 10, 0, 0, '2022-11-07', '2022-11-07'),
-	(9, 0, '2', '2441041630', '지도.JPG', '안녕하세요12w312312312', 'ㅎ하하하하호호호호호호', 9, 0, 0, '2022-11-07', '2022-11-07'),
-	(10, 0, '1', '2441041630', '', 'edwsf1234', 'bgdregrdg', 3, 0, 0, '2022-11-07', '2022-11-07');
+	(1, 0, '2', 'qwer1', '', '안녕하세요', '1234', 6, 0, 0, '2022-02-07', '2022-11-07'),
+	(2, 0, '1', 'qwer1', '', '안녕하세요', '234234', 4, 0, 0, '2022-05-07', '2022-11-07'),
+	(3, 0, '2', 'qwer1', '', '안녕하세요', '1234234', 2, 0, 0, '2022-09-07', '2022-11-07'),
+	(4, 0, '1', 'qwer1', '지도.JPG', '안녕하세요12w3', '123123', 9, 0, 0, '2022-11-07', '2022-11-07');
 /*!40000 ALTER TABLE `u_board_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.u_comments_tbl 구조 내보내기
@@ -812,16 +807,11 @@ CREATE TABLE IF NOT EXISTS `u_comments_tbl` (
   CONSTRAINT `FK_u_comments_tbl_user_tbl` FOREIGN KEY (`comment_id`) REFERENCES `user_tbl` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
--- 테이블 데이터 mydb.u_comments_tbl:~6 rows (대략적) 내보내기
+-- 테이블 데이터 mydb.u_comments_tbl:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `u_comments_tbl` DISABLE KEYS */;
 INSERT INTO `u_comments_tbl` (`comment_num`, `list_num`, `comments`, `comment_id`, `reg_date`, `mod_date`, `parent_num`) VALUES
-	(1, 5, '213213', 'qwer1', '2022-11-07 15:54:21', '2022-11-07 15:54:21', 0),
 	(6, 4, '213123', 'qwer1', '2022-11-07 16:03:48', '2022-11-07 16:03:48', 0),
-	(7, 5, 'sdfdsf', 'qwer1', '2022-11-07 16:05:18', '2022-11-07 16:05:18', 0),
-	(8, 5, 'wefqewfrwe', 'qwer1', '2022-11-07 16:05:21', '2022-11-07 16:05:21', 0),
-	(9, 6, 'dvdv', '2441041630', '2022-11-07 16:07:12', '2022-11-07 16:07:12', 0),
-	(10, 2, '78989', 'qwer1', '2022-11-07 16:46:40', '2022-11-07 16:46:40', 0),
-	(11, 10, 'dfdsf', '2441041630', '2022-11-07 17:19:36', '2022-11-07 17:19:36', 0);
+	(10, 2, '78989', 'qwer1', '2022-11-07 16:46:40', '2022-11-07 16:46:40', 0);
 /*!40000 ALTER TABLE `u_comments_tbl` ENABLE KEYS */;
 
 -- 테이블 mydb.u_image_tbl 구조 내보내기
@@ -839,6 +829,22 @@ CREATE TABLE IF NOT EXISTS `u_image_tbl` (
 /*!40000 ALTER TABLE `u_image_tbl` DISABLE KEYS */;
 /*!40000 ALTER TABLE `u_image_tbl` ENABLE KEYS */;
 
+-- 테이블 mydb.visitor_tbl 구조 내보내기
+CREATE TABLE IF NOT EXISTS `visitor_tbl` (
+  `visit_num` int(11) NOT NULL COMMENT '방문자_넘버',
+  `visit_kind` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visit_ip` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '방문자_ip',
+  `visit_time` datetime NOT NULL COMMENT '방문자 접속일자/시간',
+  PRIMARY KEY (`visit_num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 테이블 데이터 mydb.visitor_tbl:~2 rows (대략적) 내보내기
+/*!40000 ALTER TABLE `visitor_tbl` DISABLE KEYS */;
+INSERT INTO `visitor_tbl` (`visit_num`, `visit_kind`, `visit_ip`, `visit_time`) VALUES
+	(1, 'user', '0:0:0:0:0:0:0:1', '2022-11-10 18:00:42'),
+	(2, 'seller', '0:0:0:0:0:0:0:1', '2022-11-10 18:03:10');
+/*!40000 ALTER TABLE `visitor_tbl` ENABLE KEYS */;
+
 -- 테이블 mydb.wish_tbl 구조 내보내기
 CREATE TABLE IF NOT EXISTS `wish_tbl` (
   `wish_num` int(11) NOT NULL COMMENT '찜 번호',
@@ -855,7 +861,7 @@ CREATE TABLE IF NOT EXISTS `wish_tbl` (
   CONSTRAINT `FK_wish_tbl_user_tbl` FOREIGN KEY (`user_id`) REFERENCES `user_tbl` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 테이블 데이터 mydb.wish_tbl:~0 rows (대략적) 내보내기
+-- 테이블 데이터 mydb.wish_tbl:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `wish_tbl` DISABLE KEYS */;
 INSERT INTO `wish_tbl` (`wish_num`, `category_code`, `user_id`, `seller_id`, `reg_date`) VALUES
 	(1, '10', 'abcd123', 'stest001', '2022-11-08'),

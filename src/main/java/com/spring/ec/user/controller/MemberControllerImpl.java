@@ -47,7 +47,7 @@ public class MemberControllerImpl implements MemberController {
 		 */
 	}
 
-	// 로그인
+	// 로그인 창
 	@Override
 	@RequestMapping(value = "/user/loginForm.do", method = RequestMethod.GET)
 	public ModelAndView loginform(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -56,7 +56,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
-
+	//회원등록선택창(개인 or 기업) 그런데 이제 뺏음 사용 X
 	@Override
 	@RequestMapping(value = "/user/memberForm_main.do", method = RequestMethod.GET)
 	public ModelAndView memberform_main(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -66,7 +66,7 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 
 	}
-
+	//회원가입 상세
 	@Override
 	@RequestMapping(value = "/user/memberForm_udetail.do", method = RequestMethod.GET)
 	public ModelAndView memberform_udetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -75,7 +75,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav; /* ModelAndView객체 이용하여 값을 전달 */
 	}
-
+    // 로그인
 	@Override
 	@RequestMapping(value = "/user/login.do", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
@@ -99,7 +99,7 @@ public class MemberControllerImpl implements MemberController {
 		}
 		return mav;
 	}
-
+	//약관동의
 	@Override
 	@RequestMapping(value = "/user/u_regadmin.do", method = RequestMethod.GET)
 	public ModelAndView regadmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -108,7 +108,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
-
+	//로그아웃
 	@Override
 	@RequestMapping(value = "/user/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -119,7 +119,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName("redirect:/main.do");
 		return mav;
 	}
-
+	//회원가입
 	@Override
 	@RequestMapping(value = "/user/addMember.do", method = RequestMethod.POST)
 	public ModelAndView addMember(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
