@@ -342,7 +342,7 @@ td.day:hover {
 					aria-labelledby="headingThree" data-parent="">
 					<div class="t-p">
 						<div class="cust_people">
-							<i class="bi bi-info-circle"></i> minpeople~maxpeople 까지 선택
+							<i class="bi bi-info-circle"></i> ${reservInfo.min_People}명 ~ ${reservInfo.max_People}명 까지 선택
 							가능합니다.
 						</div>
 						<div class="choice_people">
