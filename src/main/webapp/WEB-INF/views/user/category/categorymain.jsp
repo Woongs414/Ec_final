@@ -3143,7 +3143,7 @@ geocoder.addressSearch(addr,function(result, status){
 			<%-- <a href="${contextPath }/storeInfo.do?seller_id=${store.seller_id}"> --%>
 					<div class="card" data-bs-toggle="offcanvas" href="#${store.seller_id }"  aria-controls="offcanvasExample" style="margin-top:10px; margin-left: 5px; margin-right: 5px;" id="card${storeNum.index }" OnMouseUp="cardreview('js-load${storeNum.index}');" onClick="setCenter('${store.seller_addr}')">
 
-	 					<img src="${contextPath}/image/store_img/${store.image_fileName}" class="card-img-top" alt="..." width="299" height="180" onclick="setcenter">
+	 					<img src="${contextPath}/store/download.do?seller_id=${store.seller_id}&imageFileName=${store.image_fileName}" class="card-img-top" alt="..." width="299" height="180" onclick="setCenter('${store.seller_addr}')">
 
 		  				<div class="card-body">
 		   				<p class="card-text">
@@ -3168,7 +3168,7 @@ geocoder.addressSearch(addr,function(result, status){
 						<div class="CB8aP" data-nclicks-area-code="btp" >
 						<!-- <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="float:right"></button> -->
 							<div class="uDR4i fnRPu">
-							<img alt="가게이미지" src="image/store_img/${store.image_fileName }" width="362">
+							<img alt="가게이미지" src="${contextPath}/store/download.do?seller_id=${store.seller_id}&imageFileName=${store.image_fileName}" width="362">
 <!-- 								<div class="CEX4u">
 								
 									<div class="fNygA">
@@ -3565,7 +3565,7 @@ geocoder.addressSearch(addr,function(result, status){
 											<a href="#" role="button" class="Ozh8q">
 												<div class="ZHqBk">
 												<div class="place_thumb">
-													<img src="${contextPath}/image/menu/${product.seller_id}/${proNum.index+1}.jpg" width="100%" height="auto">
+													<img src="${contextPath}/menu/download.do?seller_id=${product.seller_id}&imageFileName=${product.pro_img}" width="100%" height="auto">
 												</div>
 												</div>
 													<div class="MN48z">
@@ -3644,7 +3644,7 @@ geocoder.addressSearch(addr,function(result, status){
 											</div>
 											<div class="F21yP">
 												<a href="#" target="_self" role="button" class="place_thumb"><img
-													src="image/store_img/${store.image_fileName }"
+													src="${contextPath}/store/download.do?seller_id=${store.seller_id}&imageFileName=${store.image_fileName}"
 													class="_img" alt="" width="87" height="87"></a>
 											</div>
 											</li>
@@ -3775,7 +3775,7 @@ geocoder.addressSearch(addr,function(result, status){
 														class="qpNnn"><div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id}/${menuNum.index+1}.jpg);">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/menu/download.do?seller_id=${menu.seller_id}&imageFileName=${menu.pro_img});">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
@@ -3850,7 +3850,7 @@ geocoder.addressSearch(addr,function(result, status){
 													<div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id}/${menuNum.index+1}.jpg);">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id }/${menu.pro_img });">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
@@ -3942,7 +3942,7 @@ geocoder.addressSearch(addr,function(result, status){
 										<c:if test="${rev.seller_id eq store.seller_id}">
 										<script type="text/javascript">
 											$('.review_revsum${storeNum.index}').text(${rev.review_count });
-											$('.review_revavg${storeNum.index}').text(${rev.rating_avg });
+											$('.review_revavg${storeNum.index}').text(${rev.rating_avg }.toFixed(1));
 										</script>
 										
 										
@@ -4001,7 +4001,7 @@ geocoder.addressSearch(addr,function(result, status){
 																			</p>
 																		</div>
 																		<div>
-																		<b style="margin-left:5px;font-size:small; color:#8f8f8f;">${review.rating}</b>
+																		<b style="margin-left:5px;font-size:small; color:#8f8f8f;"><fmt:formatNumber value="${review.rating}" pattern=".0"/></b>
 																				<%-- <span style="margin-left:90px;font-size:small; color:#8f8f8f;">
 																				${review.rating + 0.0}
 																				</span> --%>

@@ -131,7 +131,7 @@
 	<!--카테고리-가게리뷰 select  -->
 	<select id="selectReview" resultMap="reAnsResult" parameterType="java.util.Map">
 		<![CDATA[ 
-		SELECT r.review_num,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.reg_date, r.mod_date, 
+		SELECT r.review_num,r.rating,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.reg_date, r.mod_date, 
 		a.re_ans_content ,a.reg_date AS ans_reg_date , a.mod_date AS ans_mod_date, a.re_ans_num,
 		(r.rating / 5.0) * 100 as rating_percent
 		FROM review_tbl AS r LEFT OUTER JOIN review_ans_tbl AS a
