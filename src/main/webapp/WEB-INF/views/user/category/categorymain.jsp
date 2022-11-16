@@ -3565,7 +3565,7 @@ geocoder.addressSearch(addr,function(result, status){
 											<a href="#" role="button" class="Ozh8q">
 												<div class="ZHqBk">
 												<div class="place_thumb">
-													<img src="${contextPath}/menu/download.do?seller_id=${product.seller_id}&imageFileName=${product.pro_img}" width="100%" height="auto">
+													<img src="${contextPath}/image/menu/${product.seller_id}/${proNum.index+1}.jpg" width="100%" height="auto">
 												</div>
 												</div>
 													<div class="MN48z">
@@ -3775,7 +3775,7 @@ geocoder.addressSearch(addr,function(result, status){
 														class="qpNnn"><div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(${contextPath}/menu/download.do?seller_id=${menu.seller_id}&imageFileName=${menu.pro_img});">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id}/${menuNum.index+1}.jpg);">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
@@ -3850,7 +3850,7 @@ geocoder.addressSearch(addr,function(result, status){
 													<div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id }/${menu.pro_img });">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id}/${menuNum.index+1}.jpg);">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
