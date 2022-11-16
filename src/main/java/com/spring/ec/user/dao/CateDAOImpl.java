@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import com.spring.ec.common.visit.VisitVO;
 import com.spring.ec.seller.vo.ProductVO;
 import com.spring.ec.seller.vo.SellerVO;
 import com.spring.ec.seller.vo.StoreVO;
@@ -161,10 +160,5 @@ public class CateDAOImpl implements CateDAO {
 		int book_num = sqlSession.selectOne("mapper.category.selectNewNoUserBook_num");
 		reserv.put("book_num", book_num);
 		return sqlSession.insert("mapper.category.insertNoUserBooking", reserv);
-	}
-	
-	@Override
-	public int insertVisitor(VisitVO vo) throws DataAccessException{
-		return sqlSession.insert("mapper.visit.insertVisitor", vo);
 	}
 }

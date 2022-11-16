@@ -20,8 +20,7 @@ public interface CateController {
 	
 	public @ResponseBody String reviewlike(@RequestParam(value = "review_num") int reviewnum, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id,@RequestParam(value = "category_code") String category_code,
-			@RequestParam(value = "user_id") String user_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id, @RequestParam(value = "user_id") String user_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public @ResponseBody String delwish(@RequestParam(value = "seller_id") String seller_id, @RequestParam(value = "user_id") String user_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ModelAndView addreview(@ModelAttribute("review") ReviewVO review, HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -30,5 +29,9 @@ public interface CateController {
 	
 	public ModelAndView unreservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public ModelAndView reservCheck(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	/*
+	 * public ModelAndView reservCheck(@RequestParam(value = "seller_id") String
+	 * seller_id, HttpServletRequest request, HttpServletResponse response) throws
+	 * Exception;
+	 */
 }
