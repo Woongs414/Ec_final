@@ -20,7 +20,7 @@
 📌 기술
 IDE : eclipse
 front-end : HTML, CSS, JavaScript, Ajax, BootStrap , jQuery
-back-end : java 15 , spring Tool 3 , maven
+back-end : java , spring , maven
 DB : mysql , mariaDB , Mybatis
 
 ### 📌 주요 기능
